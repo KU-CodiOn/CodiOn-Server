@@ -1,4 +1,4 @@
-package global;
+package global.common;
 
 import global.common.exception.ErrorCode;
 import org.springframework.http.HttpStatus;

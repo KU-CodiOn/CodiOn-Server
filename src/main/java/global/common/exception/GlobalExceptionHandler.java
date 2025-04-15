@@ -1,6 +1,6 @@
 package global.common.exception;
 
-import global.CustomException;
+import global.common.CustomException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
