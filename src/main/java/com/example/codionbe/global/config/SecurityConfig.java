@@ -1,4 +1,4 @@
-package global.config;
+package com.example.codionbe.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

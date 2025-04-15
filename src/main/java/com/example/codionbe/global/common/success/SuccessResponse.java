@@ -1,4 +1,4 @@
-package global.common.success;
+package com.example.codionbe.global.common.success;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

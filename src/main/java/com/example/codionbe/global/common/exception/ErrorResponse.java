@@ -1,4 +1,4 @@
-package global.common.exception;
+package com.example.codionbe.global.common.exception;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 

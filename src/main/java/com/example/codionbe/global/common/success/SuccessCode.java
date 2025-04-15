@@ -1,8 +1,8 @@
-package global.common.exception;
+package com.example.codionbe.global.common.success;
 
 import org.springframework.http.HttpStatus;
 
-public interface ErrorCode {
+public interface SuccessCode {
     HttpStatus getStatus();
     String getCode();
     String getMessage();
