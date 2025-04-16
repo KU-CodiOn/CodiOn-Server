@@ -1,6 +1,6 @@
-package global;
+package com.example.codionbe.global.common;
 
-import global.common.exception.ErrorCode;
+import com.example.codionbe.global.common.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 
 public class CustomException extends RuntimeException {
