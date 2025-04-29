@@ -47,4 +47,13 @@ public class MyPageController implements MyPageApi {
         myPageService.updatePassword(userDetails.getUser().getId(), request);
         return ResponseEntity.ok(new SuccessResponse<>(MyPageSuccessCode.PASSWORD_UPDATE_SUCCESS, null));
     }
+
+    @Override
+    @DeleteMapping
+    public ResponseEntity<SuccessResponse<Void>> deleteUser(
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        myPageService.deleteUser(userDetails.getUser().getId());
+        return ResponseEntity.ok(new SuccessResponse<>(MyPageSuccessCode.USER_DELETE_SUCCESS, null));
+    }
 }

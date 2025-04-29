@@ -56,4 +56,12 @@ public class MyPageService {
 
         user.updatePassword(passwordEncoder.encode(request.getNewPassword()));
     }
+
+    @Transactional
+    public void deleteUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(AuthErrorCode.USER_NOT_FOUND));
+
+        user.markAsDeleted(); // 실제 삭제 대신 삭제 상태로 변경
+    }
 }

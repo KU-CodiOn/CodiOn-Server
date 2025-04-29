@@ -32,12 +32,17 @@ public class User {
         USER, ADMIN
     }
 
+    @Column(nullable = false)
+    private boolean isDeleted = false;
+
     public void updateProfile(String nickname, String personalColor) {
         this.nickname = nickname;
         this.personalColor = personalColor;
     }
-
     public void updatePassword(String encryptedPassword) {
         this.password = encryptedPassword;
+    }
+    public void markAsDeleted() {
+        this.isDeleted = true;
     }
 }

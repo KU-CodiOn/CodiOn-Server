@@ -35,4 +35,10 @@ public interface MyPageApi {
             @RequestBody UpdatePasswordRequest request,
             @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
     );
+
+    @Operation(summary = "회원 탈퇴 API")
+    @ApiResponse(responseCode = "200", description = "회원 탈퇴 성공")
+    ResponseEntity<SuccessResponse<Void>> deleteUser(
+            @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
+    );
 }
