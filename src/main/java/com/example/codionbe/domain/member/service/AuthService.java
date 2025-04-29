@@ -1,7 +1,7 @@
 package com.example.codionbe.domain.member.service;
 
-import com.example.codionbe.domain.UserRepository;
-import com.example.codionbe.domain.member.User;
+import com.example.codionbe.domain.member.repository.UserRepository;
+import com.example.codionbe.domain.member.entity.User;
 import com.example.codionbe.domain.member.dto.request.LoginRequest;
 import com.example.codionbe.domain.member.dto.request.SignUpRequest;
 import com.example.codionbe.domain.member.dto.response.LoginResponse;
