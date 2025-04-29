@@ -4,11 +4,14 @@ import com.example.codionbe.domain.member.dto.request.LoginRequest;
 import com.example.codionbe.domain.member.dto.request.SignUpRequest;
 import com.example.codionbe.domain.member.dto.response.LoginResponse;
 import com.example.codionbe.domain.member.dto.response.SignUpResponse;
+import com.example.codionbe.global.auth.CustomUserDetails;
 import com.example.codionbe.global.common.success.SuccessResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Tag(name = "회원", description = "회원 관련 API")
@@ -21,4 +24,10 @@ public interface AuthApi {
     @Operation(summary = "로그인 API")
     @ApiResponse(responseCode = "200", description = "로그인 성공")
     ResponseEntity<SuccessResponse<LoginResponse>> login(@RequestBody LoginRequest request);
+
+    @Operation(summary = "로그아웃 API")
+    @ApiResponse(responseCode = "200", description = "로그아웃 성공")
+    ResponseEntity<SuccessResponse<Void>> logout(
+            @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
+    );
 }
