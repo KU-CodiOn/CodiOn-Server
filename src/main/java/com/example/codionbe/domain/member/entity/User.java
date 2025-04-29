@@ -1,4 +1,4 @@
-package com.example.codionbe.domain.member;
+package com.example.codionbe.domain.member.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,5 +30,10 @@ public class User {
 
     public enum Role {
         USER, ADMIN
+    }
+
+    public void updateProfile(String nickname, String personalColor) {
+        this.nickname = nickname;
+        this.personalColor = personalColor;
     }
 }
