@@ -1,7 +1,7 @@
 package com.example.codionbe.global.auth;
 
-import com.example.codionbe.domain.UserRepository;
-import com.example.codionbe.domain.member.User;
+import com.example.codionbe.domain.member.repository.UserRepository;
+import com.example.codionbe.domain.member.entity.User;
 import com.example.codionbe.domain.member.exception.AuthErrorCode;
 import com.example.codionbe.global.common.CustomException;
 import lombok.RequiredArgsConstructor;

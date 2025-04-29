@@ -1,7 +1,7 @@
 package com.example.codionbe.domain.member.service;
 
-import com.example.codionbe.domain.UserRepository;
-import com.example.codionbe.domain.member.User;
+import com.example.codionbe.domain.member.repository.UserRepository;
+import com.example.codionbe.domain.member.entity.User;
 import com.example.codionbe.domain.member.dto.request.LoginRequest;
 import com.example.codionbe.domain.member.dto.request.SignUpRequest;
 import com.example.codionbe.domain.member.dto.response.LoginResponse;
@@ -52,7 +52,7 @@ public class AuthService {
 
     @Transactional
     public LoginResponse login(LoginRequest request) {
-        User user = userRepository.findByEmail(request.getEmail())
+        User user = userRepository.findByEmailAndIsDeletedFalse(request.getEmail())
                 .orElseThrow(() -> new CustomException(AuthErrorCode.USER_NOT_FOUND));
 
         // 1. 비밀번호 일치 확인
@@ -81,11 +81,16 @@ public class AuthService {
             throw new CustomException(AuthErrorCode.INVALID_TOKEN);
         }
 
-        User user = userRepository.findById(userId)
+        User user = userRepository.findByIdAndIsDeletedFalse(userId)
                 .orElseThrow(() -> new CustomException(AuthErrorCode.USER_NOT_FOUND));
 
         String newAccessToken = jwtProvider.generateAccessToken(user);
 
         return new TokenRefreshResponse(newAccessToken);
+    }
+
+    @Transactional
+    public void logout(Long userId) {
+        refreshTokenRepository.deleteById(userId);
     }
 }

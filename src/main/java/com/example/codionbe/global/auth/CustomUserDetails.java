@@ -1,6 +1,6 @@
 package com.example.codionbe.global.auth;
 
-import com.example.codionbe.domain.member.User;
+import com.example.codionbe.domain.member.entity.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

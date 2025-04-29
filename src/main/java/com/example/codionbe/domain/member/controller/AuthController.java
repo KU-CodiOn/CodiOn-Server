@@ -8,9 +8,11 @@ import com.example.codionbe.domain.member.dto.response.SignUpResponse;
 import com.example.codionbe.domain.member.dto.response.TokenRefreshResponse;
 import com.example.codionbe.domain.member.exception.AuthSuccessCode;
 import com.example.codionbe.domain.member.service.AuthService;
+import com.example.codionbe.global.auth.CustomUserDetails;
 import com.example.codionbe.global.common.success.SuccessResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -38,5 +40,12 @@ public class AuthController implements AuthApi {
     public ResponseEntity<SuccessResponse<TokenRefreshResponse>> refresh(@RequestBody TokenRefreshRequest request) {
         TokenRefreshResponse response = authService.refreshAccessToken(request.getRefreshToken());
         return ResponseEntity.ok(new SuccessResponse<>(AuthSuccessCode.TOKEN_REFRESH_SUCCESS, response));
+    }
+
+    @DeleteMapping("/logout")
+    @Override
+    public ResponseEntity<SuccessResponse<Void>> logout(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        authService.logout(userDetails.getUser().getId());
+        return ResponseEntity.ok(new SuccessResponse<>(AuthSuccessCode.LOGOUT_SUCCESS, null));
     }
 }

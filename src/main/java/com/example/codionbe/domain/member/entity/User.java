@@ -1,4 +1,4 @@
-package com.example.codionbe.domain.member;
+package com.example.codionbe.domain.member.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,5 +30,19 @@ public class User {
 
     public enum Role {
         USER, ADMIN
+    }
+
+    @Column(nullable = false)
+    private boolean isDeleted = false;
+
+    public void updateProfile(String nickname, String personalColor) {
+        this.nickname = nickname;
+        this.personalColor = personalColor;
+    }
+    public void updatePassword(String encryptedPassword) {
+        this.password = encryptedPassword;
+    }
+    public void markAsDeleted() {
+        this.isDeleted = true;
     }
 }

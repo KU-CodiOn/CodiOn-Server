@@ -1,6 +1,6 @@
 package com.example.codionbe.global.auth;
 
-import com.example.codionbe.domain.member.User;
+import com.example.codionbe.domain.member.entity.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
