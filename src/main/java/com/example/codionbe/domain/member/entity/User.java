@@ -36,4 +36,8 @@ public class User {
         this.nickname = nickname;
         this.personalColor = personalColor;
     }
+
+    public void updatePassword(String encryptedPassword) {
+        this.password = encryptedPassword;
+    }
 }

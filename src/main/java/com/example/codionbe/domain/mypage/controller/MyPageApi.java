@@ -1,5 +1,6 @@
 package com.example.codionbe.domain.mypage.controller;
 
+import com.example.codionbe.domain.mypage.dto.request.UpdatePasswordRequest;
 import com.example.codionbe.domain.mypage.dto.request.UpdateProfileRequest;
 import com.example.codionbe.domain.mypage.dto.response.MyPageResponse;
 import com.example.codionbe.global.auth.CustomUserDetails;
@@ -25,6 +26,13 @@ public interface MyPageApi {
     @ApiResponse(responseCode = "200", description = "회원 정보 수정 성공")
     ResponseEntity<SuccessResponse<MyPageResponse>> updateProfile(
             @RequestBody UpdateProfileRequest request,
+            @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
+    );
+
+    @Operation(summary = "비밀번호 변경 API")
+    @ApiResponse(responseCode = "200", description = "비밀번호 변경 성공")
+    ResponseEntity<SuccessResponse<Void>> updatePassword(
+            @RequestBody UpdatePasswordRequest request,
             @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
     );
 }

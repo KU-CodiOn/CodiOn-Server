@@ -1,5 +1,6 @@
 package com.example.codionbe.domain.mypage.controller;
 
+import com.example.codionbe.domain.mypage.dto.request.UpdatePasswordRequest;
 import com.example.codionbe.domain.mypage.dto.request.UpdateProfileRequest;
 import com.example.codionbe.domain.mypage.dto.response.MyPageResponse;
 import com.example.codionbe.domain.mypage.exception.MyPageSuccessCode;
@@ -35,5 +36,15 @@ public class MyPageController implements MyPageApi {
 
         MyPageResponse response = myPageService.updateProfile(userDetails.getUser().getId(), request);
         return ResponseEntity.ok(new SuccessResponse<>(MyPageSuccessCode.MYPAGE_UPDATE_SUCCESS, response));
+    }
+
+    @Override
+    @PatchMapping("/password")
+    public ResponseEntity<SuccessResponse<Void>> updatePassword(
+            @RequestBody UpdatePasswordRequest request,
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        myPageService.updatePassword(userDetails.getUser().getId(), request);
+        return ResponseEntity.ok(new SuccessResponse<>(MyPageSuccessCode.PASSWORD_UPDATE_SUCCESS, null));
     }
 }
