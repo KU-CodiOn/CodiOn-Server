@@ -19,6 +19,13 @@ hooks:
     - location: scripts/env.sh
       timeout: 60
       runas: ubuntu
+      env:
+        JWT_SECRET: "{{YOUR_SECRET}}"
+        DB_URL: "{{YOUR_SECRET}}"
+        DB_USERNAME: "{{YOUR_SECRET}}"
+        DB_PASSWORD: "{{YOUR_SECRET}}"
+        AWS_ACCESS_KEY_ID: "{{YOUR_SECRET}}"
+        AWS_SECRET_ACCESS_KEY: "{{YOUR_SECRET}}"
     - location: scripts/stop.sh
       timeout: 60
       runas: ubuntu
