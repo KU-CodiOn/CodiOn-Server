@@ -71,6 +71,10 @@ jobs:
             --s3-location bucket=$S3_BUCKET_NAME,key=$GITHUB_SHA.zip,bundleType=zip
 
       # (7) 환경변수 주입 & env.sh 실행
+
+      - name: Make app directory
+        run: mkdir -p /home/ubuntu/app
+
       - name: Set environment variables and run env.sh
         run: |
           export JWT_SECRET=${{ secrets.JWT_SECRET }}
