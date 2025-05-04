@@ -76,7 +76,7 @@ jobs:
         run: sudo mkdir -p /home/ubuntu/app
         
       - name: Set permissions
-        run: sudo chown -R ubuntu:ubuntu /home/ubuntu/app
+#        run: sudo chown -R ubuntu:ubuntu /home/ubuntu/app
 
       - name: Set environment variables and run env.sh
         run: |
