@@ -9,8 +9,10 @@ files:
 permissions:
   - object: /
     pattern: "**"
-    owner: ubuntu
-    group: ubuntu
+#    owner: ubuntu
+#    group: ubuntu
+    mode: 755
+
 
 hooks:
   AfterInstall:
