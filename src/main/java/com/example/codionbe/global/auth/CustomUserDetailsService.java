@@ -3,7 +3,7 @@ package com.example.codionbe.global.auth;
 import com.example.codionbe.domain.member.repository.UserRepository;
 import com.example.codionbe.domain.member.entity.User;
 import com.example.codionbe.domain.member.exception.AuthErrorCode;
-import com.example.codionbe.global.common.CustomException;
+import com.example.codionbe.global.common.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

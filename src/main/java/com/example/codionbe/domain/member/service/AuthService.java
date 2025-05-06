@@ -11,7 +11,7 @@ import com.example.codionbe.domain.member.entity.RefreshToken;
 import com.example.codionbe.domain.member.exception.AuthErrorCode;
 import com.example.codionbe.domain.member.repository.RefreshTokenRepository;
 import com.example.codionbe.global.auth.JwtProvider;
-import com.example.codionbe.global.common.CustomException;
+import com.example.codionbe.global.common.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

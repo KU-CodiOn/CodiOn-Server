@@ -6,7 +6,7 @@ import com.example.codionbe.domain.member.repository.UserRepository;
 import com.example.codionbe.domain.mypage.dto.request.UpdatePasswordRequest;
 import com.example.codionbe.domain.mypage.dto.request.UpdateProfileRequest;
 import com.example.codionbe.domain.mypage.dto.response.MyPageResponse;
-import com.example.codionbe.global.common.CustomException;
+import com.example.codionbe.global.common.exception.CustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

@@ -9,25 +9,52 @@ import com.example.codionbe.global.common.success.SuccessResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Tag(name = "회원", description = "회원 관련 API")
 public interface AuthApi {
 
-    @Operation(summary = "회원가입 API")
-    @ApiResponse(responseCode = "200", description = "회원가입 성공")
-    ResponseEntity<SuccessResponse<SignUpResponse>> signup(SignUpRequest request);
+    @Operation(summary = "회원가입 API", description = "이메일, 비밀번호, 닉네임, 퍼스널컬러 정보를 입력받아 회원가입을 진행합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "회원가입 성공"),
+            @ApiResponse(responseCode = "400", description = "입력값 오류 또는 이메일 중복"),
+            @ApiResponse(responseCode = "500", description = "서버 오류")
+    })
+    @PostMapping("/signup")
+    ResponseEntity<SuccessResponse<SignUpResponse>> signup(
+            @RequestBody @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "회원가입 요청") SignUpRequest request
+    );
 
-    @Operation(summary = "로그인 API")
-    @ApiResponse(responseCode = "200", description = "로그인 성공")
-    ResponseEntity<SuccessResponse<LoginResponse>> login(@RequestBody LoginRequest request);
+    @Operation(summary = "로그인 API", description = "이메일과 비밀번호로 로그인을 시도하고 토큰을 발급받습니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "로그인 성공"),
+            @ApiResponse(responseCode = "401", description = "비밀번호 불일치 또는 존재하지 않는 사용자"),
+            @ApiResponse(responseCode = "500", description = "서버 오류")
+    })
+    @PostMapping("/login")
+    ResponseEntity<SuccessResponse<LoginResponse>> login(
+            @RequestBody @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "로그인 요청") LoginRequest request
+    );
 
-    @Operation(summary = "로그아웃 API")
-    @ApiResponse(responseCode = "200", description = "로그아웃 성공")
+    @Operation(
+            summary = "로그아웃 API",
+            description = "AccessToken으로 인증된 사용자의 RefreshToken을 삭제하여 로그아웃 처리합니다.",
+            security = @SecurityRequirement(name = "bearerAuth")
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "로그아웃 성공"),
+            @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자")
+    })
+    @DeleteMapping("/logout")
     ResponseEntity<SuccessResponse<Void>> logout(
             @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
     );
 }
+
