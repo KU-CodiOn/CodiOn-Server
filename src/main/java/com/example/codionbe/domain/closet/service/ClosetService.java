@@ -93,6 +93,22 @@ public class ClosetService {
         clothes.delete(); // isDeleted = true
     }
 
+    @Transactional(readOnly = true)
+    public ClothesResponse getClothesDetail(Long userId, Long clothesId) {
+        Clothes clothes = clothesRepository.findById(clothesId)
+                .orElseThrow(() -> new CustomException(ClosetErrorCode.CLOTHES_NOT_FOUND));
+
+        if (!clothes.getUserId().equals(userId)) {
+            throw new CustomException(ClosetErrorCode.NO_AUTHORITY);
+        }
+
+        if (clothes.isDeleted()) {
+            throw new CustomException(ClosetErrorCode.CLOTHES_NOT_FOUND);
+        }
+
+        return ClothesResponse.from(clothes);
+    }
+
     @Transactional
     public FavoriteToggleResponse toggleFavorite(Long userId, Long clothesId) {
         Clothes clothes = clothesRepository.findById(clothesId)

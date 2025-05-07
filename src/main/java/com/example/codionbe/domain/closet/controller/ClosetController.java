@@ -54,6 +54,12 @@ public class ClosetController implements ClosetApi {
     }
 
     @Override
+    public ResponseEntity<SuccessResponse<ClothesResponse>> getClothesDetail(Long clothesId, CustomUserDetails userDetails) {
+        ClothesResponse response = closetService.getClothesDetail(userDetails.getUser().getId(), clothesId);
+        return ResponseEntity.ok(new SuccessResponse<>(ClosetSuccessCode.CLOTHES_DETAIL_SUCCESS, response));
+    }
+
+    @Override
     public ResponseEntity<SuccessResponse<Void>> deleteClothes(Long clothesId, CustomUserDetails userDetails) {
         closetService.deleteClothes(userDetails.getUser().getId(), clothesId);
         return ResponseEntity.ok(new SuccessResponse<>(ClosetSuccessCode.CLOTHES_DELETE_SUCCESS, null));

@@ -57,6 +57,14 @@ public interface ClosetApi {
             @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
     );
 
+    @Operation(summary = "옷 상세 조회 API", description = "옷 ID를 통해 옷의 상세 정보를 조회합니다.")
+    @ApiResponse(responseCode = "200", description = "옷 상세 조회 성공")
+    @GetMapping("/closet/{clothesId}")
+    ResponseEntity<SuccessResponse<ClothesResponse>> getClothesDetail(
+            @PathVariable("clothesId") Long clothesId,
+            @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
+    );
+
     @Operation(summary = "즐겨찾기 토글 API", description = "옷의 즐겨찾기 상태를 반전시킵니다.")
     @ApiResponse(responseCode = "200", description = "즐겨찾기 상태 변경 성공")
     @PatchMapping("/closet/{clothesId}/favorite")
