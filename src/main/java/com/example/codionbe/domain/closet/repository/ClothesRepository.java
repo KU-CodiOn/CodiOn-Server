@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ClothesRepository extends JpaRepository<Clothes, Long> {
+public interface ClothesRepository extends JpaRepository<Clothes, Long>, ClothesRepositoryCustom {
     List<Clothes> findByUserIdAndIsDeletedFalse(Long userId);
 }

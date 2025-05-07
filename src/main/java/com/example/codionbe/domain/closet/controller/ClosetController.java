@@ -1,6 +1,8 @@
 package com.example.codionbe.domain.closet.controller;
 
 import com.example.codionbe.domain.closet.dto.RegisterClothesRequest;
+import com.example.codionbe.domain.closet.dto.request.ClothesFilterRequest;
+import com.example.codionbe.domain.closet.dto.response.ClothesResponse;
 import com.example.codionbe.domain.closet.exception.ClosetSuccessCode;
 import com.example.codionbe.domain.closet.service.ClosetService;
 import com.example.codionbe.global.auth.CustomUserDetails;
@@ -11,10 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class ClosetController implements ClosetApi {
+public class ClosetController implements com.example.codionbe.domain.closet.controller.ClosetApi {
 
     private final ClosetService closetService;
 
@@ -26,5 +29,14 @@ public class ClosetController implements ClosetApi {
 
         closetService.registerClothes(userDetails.getUser().getId(), image, request);
         return ResponseEntity.ok(new SuccessResponse<>(ClosetSuccessCode.CLOTHES_REGISTER_SUCCESS, null));
+    }
+
+    @Override
+    public ResponseEntity<SuccessResponse<List<ClothesResponse>>> getClothesList(
+            CustomUserDetails userDetails,
+            ClothesFilterRequest filterRequest
+    ) {
+        List<ClothesResponse> clothesList = closetService.getClothesList(userDetails.getUser().getId(), filterRequest);
+        return ResponseEntity.ok(new SuccessResponse<>(ClosetSuccessCode.CLOTHES_LIST_SUCCESS, clothesList));
     }
 }

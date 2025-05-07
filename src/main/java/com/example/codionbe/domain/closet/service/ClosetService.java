@@ -1,5 +1,7 @@
 package com.example.codionbe.domain.closet.service;
 
+import com.example.codionbe.domain.closet.dto.request.ClothesFilterRequest;
+import com.example.codionbe.domain.closet.dto.response.ClothesResponse;
 import com.example.codionbe.domain.closet.entity.Clothes;
 import com.example.codionbe.domain.closet.dto.RegisterClothesRequest;
 import com.example.codionbe.domain.closet.repository.ClothesRepository;
@@ -10,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,5 +41,12 @@ public class ClosetService {
                 .build();
 
         clothesRepository.save(clothes);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ClothesResponse> getClothesList(Long userId, ClothesFilterRequest filterRequest) {
+        List<Clothes> filtered = clothesRepository.findByUserIdAndFilter(userId, filterRequest);
+
+        return filtered.stream().map(ClothesResponse::from).collect(Collectors.toList());
     }
 }
