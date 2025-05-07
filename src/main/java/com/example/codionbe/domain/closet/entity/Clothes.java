@@ -46,14 +46,18 @@ public class Clothes {
         this.isDeleted = true;
     }
 
+    public void updateImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+
     public void updateInfo(String name, String category, String personalColor, String color,
-                           boolean suitableForRain, List<String> keywords, String imageUrl) {
+                           Boolean suitableForRain, List<String> situationKeywords) {
         this.name = name;
         this.category = category;
         this.personalColor = personalColor;
         this.color = color;
         this.suitableForRain = suitableForRain;
-        this.situationKeywords = String.join(",", keywords);
-        this.imageUrl = imageUrl;
+        this.situationKeywords = String.join(",", situationKeywords);
     }
 }

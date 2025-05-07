@@ -10,7 +10,8 @@ import org.springframework.http.HttpStatus;
 public enum ClosetSuccessCode implements SuccessCode {
 
     CLOTHES_REGISTER_SUCCESS(HttpStatus.OK, "CLOSET_001", "옷 등록에 성공했습니다."),
-    CLOTHES_LIST_SUCCESS(HttpStatus.OK, "CLOSET_002", "MY 옷장 목록 조회에 성공했습니다.");
+    CLOTHES_LIST_SUCCESS(HttpStatus.OK, "CLOSET_002", "MY 옷장 목록 조회에 성공했습니다."),
+    CLOTHES_UPDATE_SUCCESS(HttpStatus.OK,"CLOSET_003", "옷 수정에 성공했습니다.");
 
     private final HttpStatus status;
     private final String code;
