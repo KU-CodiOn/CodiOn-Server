@@ -3,7 +3,7 @@ package com.example.codionbe.domain.closet.service;
 import com.example.codionbe.domain.closet.dto.request.ClothesFilterRequest;
 import com.example.codionbe.domain.closet.dto.response.ClothesResponse;
 import com.example.codionbe.domain.closet.entity.Clothes;
-import com.example.codionbe.domain.closet.dto.RegisterClothesRequest;
+import com.example.codionbe.domain.closet.dto.request.RegisterClothesRequest;
 import com.example.codionbe.domain.closet.repository.ClothesRepository;
 import com.example.codionbe.global.s3.S3Uploader;
 import lombok.RequiredArgsConstructor;

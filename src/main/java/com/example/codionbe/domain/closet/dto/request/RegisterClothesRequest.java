@@ -1,4 +1,4 @@
-package com.example.codionbe.domain.closet.dto;
+package com.example.codionbe.domain.closet.dto.request;
 
 import lombok.Data;
 

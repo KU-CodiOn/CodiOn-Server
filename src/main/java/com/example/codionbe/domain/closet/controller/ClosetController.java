@@ -1,6 +1,6 @@
 package com.example.codionbe.domain.closet.controller;
 
-import com.example.codionbe.domain.closet.dto.RegisterClothesRequest;
+import com.example.codionbe.domain.closet.dto.request.RegisterClothesRequest;
 import com.example.codionbe.domain.closet.dto.request.ClothesFilterRequest;
 import com.example.codionbe.domain.closet.dto.response.ClothesResponse;
 import com.example.codionbe.domain.closet.exception.ClosetSuccessCode;
