@@ -47,4 +47,12 @@ public interface ClosetApi {
             @RequestPart("request") UpdateClothesRequest request,
             @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
     ) throws IOException;
+
+    @Operation(summary = "옷 삭제 API", description = "해당 옷을 MY 옷장에서 삭제합니다.")
+    @ApiResponse(responseCode = "200", description = "옷 삭제 성공")
+    @DeleteMapping("/closet/{clothesId}")
+    ResponseEntity<SuccessResponse<Void>> deleteClothes(
+            @PathVariable("clothesId") Long clothesId,
+            @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
+    );
 }

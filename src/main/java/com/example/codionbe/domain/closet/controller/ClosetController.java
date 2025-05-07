@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class ClosetController implements com.example.codionbe.domain.closet.controller.ClosetApi {
+public class ClosetController implements ClosetApi {
 
     private final ClosetService closetService;
 
@@ -50,5 +50,11 @@ public class ClosetController implements com.example.codionbe.domain.closet.cont
     ) throws IOException {
         closetService.updateClothes(userDetails.getUser().getId(), clothesId, image, request);
         return ResponseEntity.ok(new SuccessResponse<>(ClosetSuccessCode.CLOTHES_UPDATE_SUCCESS, null));
+    }
+
+    @Override
+    public ResponseEntity<SuccessResponse<Void>> deleteClothes(Long clothesId, CustomUserDetails userDetails) {
+        closetService.deleteClothes(userDetails.getUser().getId(), clothesId);
+        return ResponseEntity.ok(new SuccessResponse<>(ClosetSuccessCode.CLOTHES_DELETE_SUCCESS, null));
     }
 }

@@ -45,6 +45,9 @@ public class Clothes {
     public void markAsDeleted() {
         this.isDeleted = true;
     }
+    public void delete() {
+        this.isDeleted = true;
+    }
 
     public void updateImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;

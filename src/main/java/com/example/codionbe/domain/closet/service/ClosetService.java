@@ -79,4 +79,16 @@ public class ClosetService {
                 request.getSituationKeywords()
         );
     }
+
+    @Transactional
+    public void deleteClothes(Long userId, Long clothesId) {
+        Clothes clothes = clothesRepository.findById(clothesId)
+                .orElseThrow(() -> new CustomException(ClosetErrorCode.CLOTHES_NOT_FOUND));
+
+        if (!clothes.getUserId().equals(userId)) {
+            throw new CustomException(ClosetErrorCode.NO_AUTHORITY);
+        }
+
+        clothes.delete(); // isDeleted = true
+    }
 }
