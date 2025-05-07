@@ -4,6 +4,7 @@ import com.example.codionbe.domain.closet.dto.request.RegisterClothesRequest;
 import com.example.codionbe.domain.closet.dto.request.ClothesFilterRequest;
 import com.example.codionbe.domain.closet.dto.request.UpdateClothesRequest;
 import com.example.codionbe.domain.closet.dto.response.ClothesResponse;
+import com.example.codionbe.domain.closet.dto.response.FavoriteToggleResponse;
 import com.example.codionbe.global.auth.CustomUserDetails;
 import com.example.codionbe.global.common.success.SuccessResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -52,6 +53,14 @@ public interface ClosetApi {
     @ApiResponse(responseCode = "200", description = "옷 삭제 성공")
     @DeleteMapping("/closet/{clothesId}")
     ResponseEntity<SuccessResponse<Void>> deleteClothes(
+            @PathVariable("clothesId") Long clothesId,
+            @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
+    );
+
+    @Operation(summary = "즐겨찾기 토글 API", description = "옷의 즐겨찾기 상태를 반전시킵니다.")
+    @ApiResponse(responseCode = "200", description = "즐겨찾기 상태 변경 성공")
+    @PatchMapping("/closet/{clothesId}/favorite")
+    ResponseEntity<SuccessResponse<FavoriteToggleResponse>> toggleFavorite(
             @PathVariable("clothesId") Long clothesId,
             @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
     );

@@ -4,6 +4,7 @@ import com.example.codionbe.domain.closet.dto.request.RegisterClothesRequest;
 import com.example.codionbe.domain.closet.dto.request.ClothesFilterRequest;
 import com.example.codionbe.domain.closet.dto.request.UpdateClothesRequest;
 import com.example.codionbe.domain.closet.dto.response.ClothesResponse;
+import com.example.codionbe.domain.closet.dto.response.FavoriteToggleResponse;
 import com.example.codionbe.domain.closet.exception.ClosetSuccessCode;
 import com.example.codionbe.domain.closet.service.ClosetService;
 import com.example.codionbe.global.auth.CustomUserDetails;
@@ -56,5 +57,11 @@ public class ClosetController implements ClosetApi {
     public ResponseEntity<SuccessResponse<Void>> deleteClothes(Long clothesId, CustomUserDetails userDetails) {
         closetService.deleteClothes(userDetails.getUser().getId(), clothesId);
         return ResponseEntity.ok(new SuccessResponse<>(ClosetSuccessCode.CLOTHES_DELETE_SUCCESS, null));
+    }
+
+    @Override
+    public ResponseEntity<SuccessResponse<FavoriteToggleResponse>> toggleFavorite(Long clothesId, CustomUserDetails userDetails) {
+        FavoriteToggleResponse response = closetService.toggleFavorite(userDetails.getUser().getId(), clothesId);
+        return ResponseEntity.ok(new SuccessResponse<>(ClosetSuccessCode.FAVORITE_TOGGLE_SUCCESS, response));
     }
 }

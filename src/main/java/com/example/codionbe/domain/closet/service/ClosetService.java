@@ -3,6 +3,7 @@ package com.example.codionbe.domain.closet.service;
 import com.example.codionbe.domain.closet.dto.request.ClothesFilterRequest;
 import com.example.codionbe.domain.closet.dto.request.UpdateClothesRequest;
 import com.example.codionbe.domain.closet.dto.response.ClothesResponse;
+import com.example.codionbe.domain.closet.dto.response.FavoriteToggleResponse;
 import com.example.codionbe.domain.closet.entity.Clothes;
 import com.example.codionbe.domain.closet.dto.request.RegisterClothesRequest;
 import com.example.codionbe.domain.closet.exception.ClosetErrorCode;
@@ -90,5 +91,19 @@ public class ClosetService {
         }
 
         clothes.delete(); // isDeleted = true
+    }
+
+    @Transactional
+    public FavoriteToggleResponse toggleFavorite(Long userId, Long clothesId) {
+        Clothes clothes = clothesRepository.findById(clothesId)
+                .orElseThrow(() -> new CustomException(ClosetErrorCode.CLOTHES_NOT_FOUND));
+
+        if (!clothes.getUserId().equals(userId)) {
+            throw new CustomException(ClosetErrorCode.NO_AUTHORITY);
+        }
+
+        clothes.toggleFavorite(); // true → false, false → true
+
+        return new FavoriteToggleResponse(clothes.getId(), clothes.isFavorite());
     }
 }

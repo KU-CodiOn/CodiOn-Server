@@ -53,6 +53,10 @@ public class Clothes {
         this.imageUrl = imageUrl;
     }
 
+    public void toggleFavorite() {
+        this.isFavorite = !this.isFavorite;
+    }
+
 
     public void updateInfo(String name, String category, String personalColor, String color,
                            Boolean suitableForRain, List<String> situationKeywords) {
