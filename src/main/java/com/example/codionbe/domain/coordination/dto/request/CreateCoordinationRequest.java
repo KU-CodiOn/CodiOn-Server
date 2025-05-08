@@ -1,4 +1,4 @@
-package com.example.codionbe.domain.coordination.dto;
+package com.example.codionbe.domain.coordination.dto.request;
 
 import lombok.Data;
 
