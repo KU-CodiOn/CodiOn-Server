@@ -1,6 +1,7 @@
 package com.example.codionbe.domain.comment.controller;
 
 import com.example.codionbe.domain.comment.dto.CommentCreateRequest;
+import com.example.codionbe.domain.comment.dto.request.CommentUpdateRequest;
 import com.example.codionbe.domain.comment.exception.CommentSuccessCode;
 import com.example.codionbe.domain.comment.service.CommentService;
 import com.example.codionbe.global.auth.CustomUserDetails;
@@ -24,6 +25,15 @@ public class CommentController implements CommentApi{
 
         commentService.createComment(userDetails.getUser().getId(), request);
         return ResponseEntity.ok(new SuccessResponse<>(CommentSuccessCode.COMMENT_CREATE_SUCCESS, null));
+    }
+
+    @Override
+    public ResponseEntity<SuccessResponse<Void>> updateComment(
+            CommentUpdateRequest request,
+            CustomUserDetails userDetails) {
+
+        commentService.updateComment(userDetails.getUser().getId(), request);
+        return ResponseEntity.ok(new SuccessResponse<>(CommentSuccessCode.COMMENT_UPDATE_SUCCESS, null));
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.codionbe.domain.comment.service;
 
 import com.example.codionbe.domain.comment.dto.CommentCreateRequest;
+import com.example.codionbe.domain.comment.dto.request.CommentUpdateRequest;
 import com.example.codionbe.domain.comment.entity.Comment;
 import com.example.codionbe.domain.comment.exception.CommentErrorCode;
 import com.example.codionbe.domain.comment.repository.CommentRepository;
@@ -37,4 +38,15 @@ public class CommentService {
         coordination.setComment(comment); // 양방향 연관
     }
 
+    @Transactional
+    public void updateComment(Long userId, CommentUpdateRequest request) {
+        Coordination coordination = coordinationRepository
+                .findByUserIdAndDateAndIsDeletedFalse(userId, request.getDate())
+                .orElseThrow(() -> new CustomException(CommentErrorCode.COORDINATION_NOT_FOUND));
+
+        Comment comment = commentRepository.findByCoordination(coordination)
+                .orElseThrow(() -> new CustomException(CommentErrorCode.COMMENT_NOT_FOUND));
+
+        comment.update(request.getMood(), request.getContent());
+    }
 }

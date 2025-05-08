@@ -21,5 +21,10 @@ public class Comment {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "coordination_id")
     private Coordination coordination;
+
+    public void update(String mood, String content) {
+        this.mood = mood;
+        this.content = content;
+    }
 }
 
