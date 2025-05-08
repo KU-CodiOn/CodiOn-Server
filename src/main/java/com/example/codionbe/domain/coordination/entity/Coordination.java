@@ -1,6 +1,7 @@
 package com.example.codionbe.domain.coordination.entity;
 
 import com.example.codionbe.domain.closet.entity.Clothes;
+import com.example.codionbe.domain.comment.entity.Comment;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,6 +32,14 @@ public class Coordination {
             inverseJoinColumns = @JoinColumn(name = "clothes_id")
     )
     private List<Clothes> clothesList;
+
+    @OneToOne(mappedBy = "coordination", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Comment comment;
+
+    public void setComment(Comment comment) {
+        this.comment = comment;
+    }
+
 
     public void updateClothes(List<Clothes> newClothesList) {
         this.clothesList.clear();
