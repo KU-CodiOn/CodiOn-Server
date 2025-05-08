@@ -57,6 +57,15 @@ public class Clothes {
         this.isFavorite = !this.isFavorite;
     }
 
+    public void increaseWearingCount() {
+        this.wearCount++;
+    }
+
+    public void decreaseWearingCount() {
+        if (this.wearCount > 0) {
+            this.wearCount--;
+        }
+    }
 
     public void updateInfo(String name, String category, String personalColor, String color,
                            Boolean suitableForRain, List<String> situationKeywords) {
