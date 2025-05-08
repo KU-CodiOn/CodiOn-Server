@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/coordination/comment")
@@ -34,6 +36,14 @@ public class CommentController implements CommentApi{
 
         commentService.updateComment(userDetails.getUser().getId(), request);
         return ResponseEntity.ok(new SuccessResponse<>(CommentSuccessCode.COMMENT_UPDATE_SUCCESS, null));
+    }
+
+    @Override
+    public ResponseEntity<SuccessResponse<Void>> deleteComment(
+            LocalDate date, CustomUserDetails userDetails) {
+
+        commentService.deleteComment(userDetails.getUser().getId(), date);
+        return ResponseEntity.ok(new SuccessResponse<>(CommentSuccessCode.COMMENT_DELETE_SUCCESS, null));
     }
 
 }

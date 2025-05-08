@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+
 @Service
 @RequiredArgsConstructor
 public class CommentService {
@@ -49,4 +51,18 @@ public class CommentService {
 
         comment.update(request.getMood(), request.getContent());
     }
+
+    @Transactional
+    public void deleteComment(Long userId, LocalDate date) {
+        Coordination coordination = coordinationRepository
+                .findByUserIdAndDateAndIsDeletedFalse(userId, date)
+                .orElseThrow(() -> new CustomException(CommentErrorCode.COORDINATION_NOT_FOUND));
+
+        Comment comment = commentRepository.findByCoordination(coordination)
+                .orElseThrow(() -> new CustomException(CommentErrorCode.COMMENT_NOT_FOUND));
+
+        commentRepository.delete(comment);
+        coordination.setComment(null); // 연관 관계도 끊어줌
+    }
+
 }
