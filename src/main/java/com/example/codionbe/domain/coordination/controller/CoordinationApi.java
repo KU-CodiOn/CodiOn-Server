@@ -1,6 +1,6 @@
 package com.example.codionbe.domain.coordination.controller;
 
-import com.example.codionbe.domain.coordination.dto.CreateCoordinationRequest;
+import com.example.codionbe.domain.coordination.dto.request.CreateCoordinationRequest;
 import com.example.codionbe.domain.coordination.dto.request.CoordinationUpdateRequest;
 import com.example.codionbe.domain.coordination.dto.response.CoordinationDetailResponse;
 import com.example.codionbe.global.auth.CustomUserDetails;

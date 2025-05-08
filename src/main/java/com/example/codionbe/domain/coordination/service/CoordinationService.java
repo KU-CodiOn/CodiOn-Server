@@ -2,7 +2,7 @@ package com.example.codionbe.domain.coordination.service;
 
 import com.example.codionbe.domain.closet.entity.Clothes;
 import com.example.codionbe.domain.closet.repository.ClothesRepository;
-import com.example.codionbe.domain.coordination.dto.CreateCoordinationRequest;
+import com.example.codionbe.domain.coordination.dto.request.CreateCoordinationRequest;
 import com.example.codionbe.domain.coordination.dto.request.CoordinationUpdateRequest;
 import com.example.codionbe.domain.coordination.dto.response.ClothesSimpleResponse;
 import com.example.codionbe.domain.coordination.dto.response.CoordinationDetailResponse;
