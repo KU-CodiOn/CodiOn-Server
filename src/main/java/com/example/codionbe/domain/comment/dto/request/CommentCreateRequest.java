@@ -1,4 +1,4 @@
-package com.example.codionbe.domain.comment.dto;
+package com.example.codionbe.domain.comment.dto.request;
 
 import lombok.Getter;
 

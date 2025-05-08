@@ -1,6 +1,6 @@
 package com.example.codionbe.domain.comment.service;
 
-import com.example.codionbe.domain.comment.dto.CommentCreateRequest;
+import com.example.codionbe.domain.comment.dto.request.CommentCreateRequest;
 import com.example.codionbe.domain.comment.dto.request.CommentUpdateRequest;
 import com.example.codionbe.domain.comment.entity.Comment;
 import com.example.codionbe.domain.comment.exception.CommentErrorCode;
