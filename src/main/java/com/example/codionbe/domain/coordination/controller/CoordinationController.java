@@ -1,6 +1,7 @@
 package com.example.codionbe.domain.coordination.controller;
 
 import com.example.codionbe.domain.coordination.dto.CreateCoordinationRequest;
+import com.example.codionbe.domain.coordination.dto.request.CoordinationUpdateRequest;
 import com.example.codionbe.domain.coordination.exception.CoordinationSuccessCode;
 import com.example.codionbe.domain.coordination.service.CoordinationService;
 import com.example.codionbe.global.auth.CustomUserDetails;
@@ -25,5 +26,14 @@ public class CoordinationController implements CoordinationApi {
 
         coordinationService.createCoordination(userDetails.getUser().getId(), request);
         return ResponseEntity.ok(new SuccessResponse<>(CoordinationSuccessCode.COORDINATION_CREATE_SUCCESS, null));
+    }
+
+    @Override
+    public ResponseEntity<SuccessResponse<Void>> updateCoordination(
+            CoordinationUpdateRequest request,
+            CustomUserDetails userDetails) {
+
+        coordinationService.updateCoordination(userDetails.getUser().getId(), request);
+        return ResponseEntity.ok(new SuccessResponse<>(CoordinationSuccessCode.COORDINATION_UPDATE_SUCCESS, null));
     }
 }

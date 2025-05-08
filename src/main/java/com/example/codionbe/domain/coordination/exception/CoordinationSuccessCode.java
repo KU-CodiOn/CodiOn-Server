@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum CoordinationSuccessCode implements SuccessCode {
-    COORDINATION_CREATE_SUCCESS(HttpStatus.OK, "COORD_001", "코디 등록에 성공했습니다.");
+    COORDINATION_CREATE_SUCCESS(HttpStatus.OK, "COORD_001", "코디 등록에 성공했습니다."),
+    COORDINATION_UPDATE_SUCCESS(HttpStatus.OK, "COORD_002", "코디 수정에 성공했습니다.");
+
 
     private final HttpStatus status;
     private final String code;

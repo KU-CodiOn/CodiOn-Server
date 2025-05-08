@@ -8,7 +8,8 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum CoordinationErrorCode implements ErrorCode {
-    INVALID_CLOTHES(HttpStatus.BAD_REQUEST, "COORD_001", "유효하지 않은 옷 정보입니다.");
+    INVALID_CLOTHES(HttpStatus.BAD_REQUEST, "COORD_001", "유효하지 않은 옷 정보입니다."),
+    COORDINATION_NOT_FOUND(HttpStatus.NOT_FOUND, "COORD_002", "해당 날짜의 코디를 찾을 수 없습니다.");
 
     private final HttpStatus status;
     private final String code;
