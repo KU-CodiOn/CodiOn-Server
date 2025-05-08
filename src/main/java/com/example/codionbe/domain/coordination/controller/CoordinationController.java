@@ -47,4 +47,13 @@ public class CoordinationController implements CoordinationApi {
         CoordinationDetailResponse response = coordinationService.getCoordination(userDetails.getUser().getId(), date);
         return ResponseEntity.ok(new SuccessResponse<>(CoordinationSuccessCode.COORDINATION_GET_SUCCESS, response));
     }
+
+    @Override
+    public ResponseEntity<SuccessResponse<Void>> deleteCoordination(
+            LocalDate date, CustomUserDetails userDetails) {
+
+        coordinationService.deleteCoordination(userDetails.getUser().getId(), date);
+        return ResponseEntity.ok(new SuccessResponse<>(CoordinationSuccessCode.COORDINATION_DELETE_SUCCESS, null));
+    }
+
 }

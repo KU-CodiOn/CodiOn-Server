@@ -83,4 +83,17 @@ public class CoordinationService {
                 clothesResponses
         );
     }
+
+    @Transactional
+    public void deleteCoordination(Long userId, LocalDate date) {
+        Coordination coordination = coordinationRepository
+                .findByUserIdAndDateAndIsDeletedFalse(userId, date)
+                .orElseThrow(() -> new CustomException(CoordinationErrorCode.COORDINATION_NOT_FOUND));
+
+        // 연관 옷들 착용 횟수 감소
+        coordination.getClothesList().forEach(Clothes::decreaseWearingCount);
+
+        // soft delete
+        coordination.delete();
+    }
 }

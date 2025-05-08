@@ -21,7 +21,7 @@ public interface CoordinationApi {
 
     @Operation(summary = "코디 등록 API", description = "선택한 날짜의 코디를 등록합니다.")
     @ApiResponse(responseCode = "200", description = "코디 등록 성공")
-    @PostMapping("")
+    @PostMapping
     ResponseEntity<SuccessResponse<Void>> createCoordination(
             @RequestBody CreateCoordinationRequest request,
             @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails);
@@ -39,4 +39,12 @@ public interface CoordinationApi {
     ResponseEntity<SuccessResponse<CoordinationDetailResponse>> getCoordination(
             @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
             @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails);
+
+    @Operation(summary = "코디 삭제 API", description = "해당 날짜의 코디를 삭제합니다.")
+    @ApiResponse(responseCode = "200", description = "코디 삭제 성공")
+    @DeleteMapping
+    ResponseEntity<SuccessResponse<Void>> deleteCoordination(
+            @RequestParam("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+            @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails);
+
 }
