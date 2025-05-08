@@ -2,6 +2,7 @@ package com.example.codionbe.domain.coordination.controller;
 
 import com.example.codionbe.domain.coordination.dto.CreateCoordinationRequest;
 import com.example.codionbe.domain.coordination.dto.request.CoordinationUpdateRequest;
+import com.example.codionbe.domain.coordination.dto.response.CoordinationDetailResponse;
 import com.example.codionbe.domain.coordination.exception.CoordinationSuccessCode;
 import com.example.codionbe.domain.coordination.service.CoordinationService;
 import com.example.codionbe.global.auth.CustomUserDetails;
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDate;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,5 +38,13 @@ public class CoordinationController implements CoordinationApi {
 
         coordinationService.updateCoordination(userDetails.getUser().getId(), request);
         return ResponseEntity.ok(new SuccessResponse<>(CoordinationSuccessCode.COORDINATION_UPDATE_SUCCESS, null));
+    }
+
+    @Override
+    public ResponseEntity<SuccessResponse<CoordinationDetailResponse>> getCoordination(
+            LocalDate date, CustomUserDetails userDetails) {
+
+        CoordinationDetailResponse response = coordinationService.getCoordination(userDetails.getUser().getId(), date);
+        return ResponseEntity.ok(new SuccessResponse<>(CoordinationSuccessCode.COORDINATION_GET_SUCCESS, response));
     }
 }

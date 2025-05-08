@@ -4,6 +4,8 @@ import com.example.codionbe.domain.closet.entity.Clothes;
 import com.example.codionbe.domain.closet.repository.ClothesRepository;
 import com.example.codionbe.domain.coordination.dto.CreateCoordinationRequest;
 import com.example.codionbe.domain.coordination.dto.request.CoordinationUpdateRequest;
+import com.example.codionbe.domain.coordination.dto.response.ClothesSimpleResponse;
+import com.example.codionbe.domain.coordination.dto.response.CoordinationDetailResponse;
 import com.example.codionbe.domain.coordination.entity.Coordination;
 import com.example.codionbe.domain.coordination.exception.CoordinationErrorCode;
 import com.example.codionbe.domain.coordination.repository.CoordinationRepository;
@@ -12,7 +14,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -63,4 +67,20 @@ public class CoordinationService {
         coordination.updateClothes(newClothes);
     }
 
+    @Transactional(readOnly = true)
+    public CoordinationDetailResponse getCoordination(Long userId, LocalDate date) {
+        Coordination coordination = coordinationRepository
+                .findByUserIdAndDateAndIsDeletedFalse(userId, date)
+                .orElseThrow(() -> new CustomException(CoordinationErrorCode.COORDINATION_NOT_FOUND));
+
+        List<ClothesSimpleResponse> clothesResponses = coordination.getClothesList().stream()
+                .map(ClothesSimpleResponse::from)
+                .collect(Collectors.toList());
+
+        return new CoordinationDetailResponse(
+                coordination.getId(),
+                coordination.getDate(),
+                clothesResponses
+        );
+    }
 }
