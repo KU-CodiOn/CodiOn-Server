@@ -2,6 +2,7 @@ package com.example.codionbe.domain.coordination.service;
 
 import com.example.codionbe.domain.closet.entity.Clothes;
 import com.example.codionbe.domain.closet.repository.ClothesRepository;
+import com.example.codionbe.domain.comment.dto.response.CommentResponse;
 import com.example.codionbe.domain.coordination.dto.request.CreateCoordinationRequest;
 import com.example.codionbe.domain.coordination.dto.request.CoordinationUpdateRequest;
 import com.example.codionbe.domain.coordination.dto.response.ClothesSimpleResponse;
@@ -77,10 +78,16 @@ public class CoordinationService {
                 .map(ClothesSimpleResponse::from)
                 .collect(Collectors.toList());
 
+        CommentResponse commentResponse = null;
+        if (coordination.getComment() != null) {
+            commentResponse = CommentResponse.from(coordination.getComment());
+        }
+
         return new CoordinationDetailResponse(
                 coordination.getId(),
                 coordination.getDate(),
-                clothesResponses
+                clothesResponses,
+                commentResponse
         );
     }
 
