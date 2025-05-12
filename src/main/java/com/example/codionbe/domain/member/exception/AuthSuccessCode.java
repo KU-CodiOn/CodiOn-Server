@@ -5,10 +5,10 @@ import org.springframework.http.HttpStatus;
 
 public enum AuthSuccessCode implements SuccessCode {
 
-    SIGNUP_SUCCESS(HttpStatus.OK, "AUTH_200", "회원가입이 성공적으로 완료되었습니다."),
-    LOGIN_SUCCESS(HttpStatus.OK, "AUTH_201", "로그인이 성공적으로 완료되었습니다."),
-    TOKEN_REFRESH_SUCCESS(HttpStatus.OK, "AUTH_202", "토큰이 성공적으로 재발급되었습니다."),
-    LOGOUT_SUCCESS(HttpStatus.OK, "AUTH_204", "로그아웃 성공");
+    SIGNUP_SUCCESS(HttpStatus.OK, "AUTH_001", "회원가입이 성공적으로 완료되었습니다."),
+    LOGIN_SUCCESS(HttpStatus.OK, "AUTH_002", "로그인이 성공적으로 완료되었습니다."),
+    TOKEN_REFRESH_SUCCESS(HttpStatus.OK, "AUTH_003", "토큰이 성공적으로 재발급되었습니다."),
+    LOGOUT_SUCCESS(HttpStatus.OK, "AUTH_004", "로그아웃 성공");
 
     private final HttpStatus status;
     private final String code;
