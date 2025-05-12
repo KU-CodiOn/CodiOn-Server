@@ -91,6 +91,9 @@ public class AuthService {
 
     @Transactional
     public void logout(Long userId) {
-        refreshTokenRepository.deleteById(userId);
+        RefreshToken token = refreshTokenRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(AuthErrorCode.UNAUTHORIZED));
+
+        refreshTokenRepository.delete(token);
     }
 }
