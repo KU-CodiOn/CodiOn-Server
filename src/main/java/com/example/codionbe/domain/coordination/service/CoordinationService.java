@@ -52,7 +52,13 @@ public class CoordinationService {
         coordination.getClothesList().forEach(Clothes::decreaseWearingCount);
 
         // 새 옷 ID들 조회
-        List<Clothes> newClothes = clothesRepository.findAllById(request.getClothesIds());
+        List<Long> requestedIds = request.getClothesIds();
+        List<Clothes> newClothes = clothesRepository.findAllById(requestedIds);
+
+        // 존재하지 않는 옷이 있는지 확인
+        if (newClothes.size() != requestedIds.size()) {
+            throw new CustomException(CoordinationErrorCode.INVALID_CLOTHES);
+        }
 
         // 삭제되었거나 권한 없는 옷 체크
         for (Clothes clothes : newClothes) {

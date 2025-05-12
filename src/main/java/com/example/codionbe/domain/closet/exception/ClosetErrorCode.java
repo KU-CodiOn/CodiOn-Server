@@ -9,8 +9,8 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum ClosetErrorCode implements ErrorCode {
 
-    CLOTHES_NOT_FOUND(HttpStatus.NOT_FOUND, "CLOSET_001", "해당 옷을 찾을 수 없습니다."),
-    NO_AUTHORITY(HttpStatus.FORBIDDEN, "CLOSET_002", "해당 옷에 대한 권한이 없습니다.");
+    CLOTHES_NOT_FOUND(HttpStatus.NOT_FOUND, "CLOSET_101", "해당 옷을 찾을 수 없습니다."),
+    NO_AUTHORITY(HttpStatus.FORBIDDEN, "CLOSET_102", "해당 옷에 대한 권한이 없습니다.");
 
     private final HttpStatus status;
     private final String code;
