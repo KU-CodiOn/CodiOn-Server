@@ -4,9 +4,13 @@ import com.example.codionbe.domain.mypage.dto.request.UpdatePasswordRequest;
 import com.example.codionbe.domain.mypage.dto.request.UpdateProfileRequest;
 import com.example.codionbe.domain.mypage.dto.response.MyPageResponse;
 import com.example.codionbe.global.auth.CustomUserDetails;
+import com.example.codionbe.global.common.exception.ErrorResponse;
 import com.example.codionbe.global.common.success.SuccessResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -27,8 +31,27 @@ public interface MyPageApi {
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "회원 정보 조회 성공"),
-            @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자")
+            @ApiResponse(responseCode = "200", description = "회원 정보 조회 성공",
+                    content = @Content(schema = @Schema(implementation = SuccessResponse.class),
+                            examples = @ExampleObject(value = """
+                            {
+                              "code": "MYPAGE_001",
+                              "message": "회원 정보 조회 성공",
+                              "data": {
+                                "email": "test@example.com",
+                                "nickname": "홍길동",
+                                "personalColor": "SPRING"
+                              }
+                            }
+                            """))),
+            @ApiResponse(responseCode = "401", description = "인증 정보가 유효하지 않습니다.",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class),
+                            examples = @ExampleObject(value = """
+                            {
+                              "code": "AUTH_105",
+                              "message": "인증 정보가 유효하지 않습니다."
+                            }
+                            """)))
     })
     @GetMapping("")
     ResponseEntity<SuccessResponse<MyPageResponse>> getMyPage(
@@ -41,9 +64,27 @@ public interface MyPageApi {
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "회원 정보 수정 성공"),
-            @ApiResponse(responseCode = "400", description = "입력값 오류"),
-            @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자")
+            @ApiResponse(responseCode = "200", description = "회원 정보 수정 성공",
+                    content = @Content(schema = @Schema(implementation = SuccessResponse.class),
+                            examples = @ExampleObject(value = """
+                            {
+                              "code": "MYPAGE_002",
+                              "message": "회원 정보 수정 성공",
+                              "data": {
+                                "email": "test@example.com",
+                                "nickname": "변경된이름",
+                                "personalColor": "SUMMER"
+                              }
+                            }
+                            """))),
+            @ApiResponse(responseCode = "401", description = "인증 정보가 유효하지 않습니다.",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class),
+                            examples = @ExampleObject(value = """
+                            {
+                              "code": "AUTH_105",
+                              "message": "인증 정보가 유효하지 않습니다."
+                            }
+                            """)))
     })
     @PatchMapping("")
     ResponseEntity<SuccessResponse<MyPageResponse>> updateProfile(
@@ -57,9 +98,31 @@ public interface MyPageApi {
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "비밀번호 변경 성공"),
-            @ApiResponse(responseCode = "400", description = "비밀번호 불일치"),
-            @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자")
+            @ApiResponse(responseCode = "200", description = "비밀번호 변경 성공",
+                    content = @Content(schema = @Schema(implementation = SuccessResponse.class),
+                            examples = @ExampleObject(value = """
+                            {
+                              "code": "MYPAGE_003",
+                              "message": "비밀번호 변경 성공",
+                              "data": null
+                            }
+                            """))),
+            @ApiResponse(responseCode = "400", description = "비밀번호 불일치",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class),
+                            examples = @ExampleObject(value = """
+                            {
+                              "code": "AUTH_102",
+                              "message": "비밀번호와 비밀번호 확인이 일치하지 않습니다."
+                            }
+                            """))),
+            @ApiResponse(responseCode = "401", description = "인증 정보가 유효하지 않습니다.",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class),
+                            examples = @ExampleObject(value = """
+                            {
+                              "code": "AUTH_105",
+                              "message": "인증 정보가 유효하지 않습니다."
+                            }
+                            """)))
     })
     @PatchMapping("/password")
     ResponseEntity<SuccessResponse<Void>> updatePassword(
@@ -73,8 +136,23 @@ public interface MyPageApi {
             security = @SecurityRequirement(name = "bearerAuth")
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "회원 탈퇴 성공"),
-            @ApiResponse(responseCode = "401", description = "인증되지 않은 사용자")
+            @ApiResponse(responseCode = "200", description = "회원 탈퇴 성공",
+                    content = @Content(schema = @Schema(implementation = SuccessResponse.class),
+                            examples = @ExampleObject(value = """
+                            {
+                              "code": "MYPAGE_004",
+                              "message": "회원 탈퇴 성공",
+                              "data": null
+                            }
+                            """))),
+            @ApiResponse(responseCode = "401", description = "인증 정보가 유효하지 않습니다.",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class),
+                            examples = @ExampleObject(value = """
+                            {
+                              "code": "AUTH_105",
+                              "message": "인증 정보가 유효하지 않습니다."
+                            }
+                            """)))
     })
     @DeleteMapping
     ResponseEntity<SuccessResponse<Void>> deleteUser(
