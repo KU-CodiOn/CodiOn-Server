@@ -26,8 +26,10 @@ import java.io.IOException;
 import java.util.List;
 
 @Tag(name = "MY 옷장", description = "MY 옷장 관련 API")
+@RequestMapping("/closet")
 public interface ClosetApi {
-    @Operation(summary = "옷 등록 API", description = "새로운 옷의 정보를 등록합니다.")
+    @Operation(summary = "옷 등록 API", description = "새로운 옷의 정보를 등록합니다.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)))
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "옷 등록 성공",
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
@@ -39,7 +41,7 @@ public interface ClosetApi {
                             }
                             """)))
     })
-    @PostMapping(value = "/closet", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ResponseEntity<SuccessResponse<Void>> registerClothes(
             @RequestPart("image") MultipartFile image,
             @RequestPart("request") RegisterClothesRequest request,
@@ -58,7 +60,7 @@ public interface ClosetApi {
                             }
                             """)))
     })
-    @GetMapping("/closet")
+    @GetMapping
     ResponseEntity<SuccessResponse<List<ClothesResponse>>> getClothesList(
             @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails,
             ClothesFilterRequest filterRequest
@@ -92,7 +94,7 @@ public interface ClosetApi {
                             }
                             """)))
     })
-    @PatchMapping("/closet/{clothesId}")
+    @PatchMapping("/{clothesId}")
     ResponseEntity<SuccessResponse<Void>> updateClothes(
             @PathVariable("clothesId") Long clothesId,
             @RequestPart(value = "image", required = false) MultipartFile image,
@@ -112,7 +114,7 @@ public interface ClosetApi {
                             }
                             """)))
     })
-    @DeleteMapping("/closet/{clothesId}")
+    @DeleteMapping("/{clothesId}")
     ResponseEntity<SuccessResponse<Void>> deleteClothes(
             @PathVariable("clothesId") Long clothesId,
             @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
@@ -141,7 +143,7 @@ public interface ClosetApi {
                             }
                             """)))
     })
-    @GetMapping("/closet/{clothesId}")
+    @GetMapping("/{clothesId}")
     ResponseEntity<SuccessResponse<ClothesResponse>> getClothesDetail(
             @PathVariable("clothesId") Long clothesId,
             @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
@@ -162,7 +164,7 @@ public interface ClosetApi {
                             }
                             """)))
     })
-    @PatchMapping("/closet/{clothesId}/favorite")
+    @PatchMapping("/{clothesId}/favorite")
     ResponseEntity<SuccessResponse<FavoriteToggleResponse>> toggleFavorite(
             @PathVariable("clothesId") Long clothesId,
             @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
