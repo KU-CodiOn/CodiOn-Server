@@ -5,6 +5,7 @@ import com.example.codionbe.domain.closet.dto.request.ClothesFilterRequest;
 import com.example.codionbe.domain.closet.dto.request.UpdateClothesRequest;
 import com.example.codionbe.domain.closet.dto.response.ClothesResponse;
 import com.example.codionbe.domain.closet.dto.response.FavoriteToggleResponse;
+import com.example.codionbe.domain.closet.dto.response.ImageAnalysisResponse;
 import com.example.codionbe.domain.closet.exception.ClosetSuccessCode;
 import com.example.codionbe.domain.closet.service.ClosetService;
 import com.example.codionbe.global.auth.CustomUserDetails;
@@ -22,6 +23,12 @@ import java.util.List;
 public class ClosetController implements ClosetApi {
 
     private final ClosetService closetService;
+
+    @Override
+    public ResponseEntity<SuccessResponse<ImageAnalysisResponse>> uploadAndAnalyzeImage(MultipartFile image, CustomUserDetails userDetails) throws IOException {
+        ImageAnalysisResponse response = closetService.uploadAndAnalyzeImage(image);
+        return ResponseEntity.ok(new SuccessResponse<>(ClosetSuccessCode.IMAGE_ANALYSIS_SUCCESS, response));
+    }
 
     @Override
     public ResponseEntity<SuccessResponse<Void>> registerClothes(
