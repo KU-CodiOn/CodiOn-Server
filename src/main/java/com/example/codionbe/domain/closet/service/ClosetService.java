@@ -4,19 +4,31 @@ import com.example.codionbe.domain.closet.dto.request.ClothesFilterRequest;
 import com.example.codionbe.domain.closet.dto.request.UpdateClothesRequest;
 import com.example.codionbe.domain.closet.dto.response.ClothesResponse;
 import com.example.codionbe.domain.closet.dto.response.FavoriteToggleResponse;
+import com.example.codionbe.domain.closet.dto.response.ImageAnalysisResponse;
+import com.example.codionbe.domain.closet.entity.Category;
 import com.example.codionbe.domain.closet.entity.Clothes;
 import com.example.codionbe.domain.closet.dto.request.RegisterClothesRequest;
+import com.example.codionbe.domain.closet.entity.PersonalColor;
 import com.example.codionbe.domain.closet.exception.ClosetErrorCode;
 import com.example.codionbe.domain.closet.repository.ClothesRepository;
 import com.example.codionbe.global.common.exception.CustomException;
 import com.example.codionbe.global.s3.S3Uploader;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,6 +37,67 @@ public class ClosetService {
 
     private final ClothesRepository clothesRepository;
     private final S3Uploader s3Uploader;
+    private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
+
+    @Value("${ai.server.url:http://43.203.196.176}")
+    private String aiServerUrl;
+
+    @Transactional
+    public ImageAnalysisResponse uploadAndAnalyzeImage(MultipartFile image) throws IOException {
+        // 1. S3에 이미지 업로드
+        String imageUrl = s3Uploader.upload(image, "closet");
+
+        // 2. 파이썬 서버에 이미지 URL 전송하여 분석 요청
+        String analysisUrl = aiServerUrl + "/analyze/fashion/url";
+
+        // 요청 헤더 설정
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // 요청 바디 설정
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("image_url", imageUrl);
+        
+        // HTTP 요청 생성
+        HttpEntity<Map<String, String>> request = new HttpEntity<>(requestBody, headers);
+        
+        // 요청 전송 및 응답 수신
+        String responseBody = restTemplate.postForObject(analysisUrl, request, String.class);
+        
+        // 응답 파싱
+        JsonNode root = objectMapper.readTree(responseBody);
+        String result = root.get("result").asText();
+        JsonNode analysisResult = objectMapper.readTree(result);
+        
+        // 응답 데이터 추출
+        String categoryStr = analysisResult.get("category").asText();
+        String personalColorStr = analysisResult.get("personalColor").asText();
+        String color = analysisResult.get("color").asText();
+        
+        // Enum 변환
+        Category category;
+        try {
+            category = Category.valueOf(categoryStr);
+        } catch (IllegalArgumentException e) {
+            category = Category.TOP; // 기본값 설정
+        }
+        
+        PersonalColor personalColor;
+        try {
+            personalColor = PersonalColor.valueOf(personalColorStr);
+        } catch (IllegalArgumentException e) {
+            personalColor = PersonalColor.SPRING; // 기본값 설정
+        }
+        
+        // 결과 반환
+        return ImageAnalysisResponse.builder()
+                .imageUrl(imageUrl)
+                .category(category)
+                .personalColor(personalColor)
+                .color(color)
+                .build();
+    }
 
     @Transactional
     public void registerClothes(Long userId, MultipartFile image, RegisterClothesRequest request) throws IOException {
