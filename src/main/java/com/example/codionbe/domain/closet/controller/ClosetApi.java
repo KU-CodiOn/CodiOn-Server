@@ -5,6 +5,7 @@ import com.example.codionbe.domain.closet.dto.request.ClothesFilterRequest;
 import com.example.codionbe.domain.closet.dto.request.UpdateClothesRequest;
 import com.example.codionbe.domain.closet.dto.response.ClothesResponse;
 import com.example.codionbe.domain.closet.dto.response.FavoriteToggleResponse;
+import com.example.codionbe.domain.closet.dto.response.ImageAnalysisResponse;
 import com.example.codionbe.global.auth.CustomUserDetails;
 import com.example.codionbe.global.common.exception.ErrorResponse;
 import com.example.codionbe.global.common.success.SuccessResponse;
@@ -28,6 +29,30 @@ import java.util.List;
 @Tag(name = "MY 옷장", description = "MY 옷장 관련 API")
 @RequestMapping("/closet")
 public interface ClosetApi {
+    @Operation(summary = "이미지 업로드 및 분석 API", description = "이미지를 업로드하고 해당 이미지에 대한 분석 결과를 반환합니다.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)))
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "이미지 분석 성공",
+                    content = @Content(schema = @Schema(implementation = SuccessResponse.class),
+                            examples = @ExampleObject(value = """
+                            {
+                              "code": "CLOSET_007",
+                              "message": "이미지 분석에 성공했습니다.",
+                              "data": {
+                                "imageUrl": "https://s3.amazonaws.com/bucket/image.jpg",
+                                "category": "TOP",
+                                "personalColor": "SUMMER",
+                                "color": "Light Blue"
+                              }
+                            }
+                            """)))
+    })
+    @PostMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    ResponseEntity<SuccessResponse<ImageAnalysisResponse>> uploadAndAnalyzeImage(
+            @RequestPart("image") MultipartFile image,
+            @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
+    ) throws IOException;
+
     @Operation(summary = "옷 등록 API", description = "새로운 옷의 정보를 등록합니다.",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)))
     @ApiResponses({
