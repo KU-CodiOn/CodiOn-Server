@@ -25,12 +25,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @Tag(name = "MY 옷장", description = "MY 옷장 관련 API")
 @RequestMapping("/closet")
 public interface ClosetApi {
-    @Operation(summary = "이미지 업로드 및 분석 API", description = "이미지를 업로드하고 해당 이미지에 대한 분석 결과를 반환합니다.",
-            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)))
+    @Operation(summary = "이미지 분석 API", description = "이미지 URL을 전송하여 해당 이미지에 대한 분석 결과를 반환합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "이미지 분석 성공",
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
@@ -47,14 +47,13 @@ public interface ClosetApi {
                             }
                             """)))
     })
-    @PostMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/image")
     ResponseEntity<SuccessResponse<ImageAnalysisResponse>> uploadAndAnalyzeImage(
-            @RequestPart("image") MultipartFile image,
+            @RequestBody Map<String, String> request,
             @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
     ) throws IOException;
 
-    @Operation(summary = "옷 등록 API", description = "새로운 옷의 정보를 등록합니다.",
-            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)))
+    @Operation(summary = "옷 등록 API", description = "새로운 옷의 정보를 등록합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "옷 등록 성공",
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
@@ -66,10 +65,9 @@ public interface ClosetApi {
                             }
                             """)))
     })
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping
     ResponseEntity<SuccessResponse<Void>> registerClothes(
-            @RequestPart("image") MultipartFile image,
-            @RequestPart("request") RegisterClothesRequest request,
+            @RequestBody RegisterClothesRequest request,
             @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
     ) throws IOException;
 
@@ -122,8 +120,7 @@ public interface ClosetApi {
     @PatchMapping("/{clothesId}")
     ResponseEntity<SuccessResponse<Void>> updateClothes(
             @PathVariable("clothesId") Long clothesId,
-            @RequestPart(value = "image", required = false) MultipartFile image,
-            @RequestPart("request") UpdateClothesRequest request,
+            @RequestBody UpdateClothesRequest request,
             @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
     ) throws IOException;
 

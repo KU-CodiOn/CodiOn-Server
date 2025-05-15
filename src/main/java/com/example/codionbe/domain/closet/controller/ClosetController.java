@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,18 +26,18 @@ public class ClosetController implements ClosetApi {
     private final ClosetService closetService;
 
     @Override
-    public ResponseEntity<SuccessResponse<ImageAnalysisResponse>> uploadAndAnalyzeImage(MultipartFile image, CustomUserDetails userDetails) throws IOException {
-        ImageAnalysisResponse response = closetService.uploadAndAnalyzeImage(image);
+    public ResponseEntity<SuccessResponse<ImageAnalysisResponse>> uploadAndAnalyzeImage(Map<String, String> request, CustomUserDetails userDetails) throws IOException {
+        String imageUrl = request.get("image_url");
+        ImageAnalysisResponse response = closetService.uploadAndAnalyzeImage(imageUrl);
         return ResponseEntity.ok(new SuccessResponse<>(ClosetSuccessCode.IMAGE_ANALYSIS_SUCCESS, response));
     }
 
     @Override
     public ResponseEntity<SuccessResponse<Void>> registerClothes(
-            MultipartFile image,
             RegisterClothesRequest request,
             CustomUserDetails userDetails) throws IOException {
 
-        closetService.registerClothes(userDetails.getUser().getId(), image, request);
+        closetService.registerClothes(userDetails.getUser().getId(), request);
         return ResponseEntity.ok(new SuccessResponse<>(ClosetSuccessCode.CLOTHES_REGISTER_SUCCESS, null));
     }
 
@@ -52,11 +53,10 @@ public class ClosetController implements ClosetApi {
     @Override
     public ResponseEntity<SuccessResponse<Void>> updateClothes(
             Long clothesId,
-            MultipartFile image,
             UpdateClothesRequest request,
             CustomUserDetails userDetails
     ) throws IOException {
-        closetService.updateClothes(userDetails.getUser().getId(), clothesId, image, request);
+        closetService.updateClothes(userDetails.getUser().getId(), clothesId, request);
         return ResponseEntity.ok(new SuccessResponse<>(ClosetSuccessCode.CLOTHES_UPDATE_SUCCESS, null));
     }
 

@@ -44,11 +44,8 @@ public class ClosetService {
     private String aiServerUrl;
 
     @Transactional
-    public ImageAnalysisResponse uploadAndAnalyzeImage(MultipartFile image) throws IOException {
-        // 1. S3에 이미지 업로드
-        String imageUrl = s3Uploader.upload(image, "closet");
-
-        // 2. 파이썬 서버에 이미지 URL 전송하여 분석 요청
+    public ImageAnalysisResponse uploadAndAnalyzeImage(String imageUrl) throws IOException {
+        // 파이썬 서버에 이미지 URL 전송하여 분석 요청
         String analysisUrl = aiServerUrl + "/analyze/fashion/url";
 
         // 요청 헤더 설정
@@ -100,9 +97,7 @@ public class ClosetService {
     }
 
     @Transactional
-    public void registerClothes(Long userId, MultipartFile image, RegisterClothesRequest request) throws IOException {
-        String imageUrl = s3Uploader.upload(image, "closet");
-
+    public void registerClothes(Long userId, RegisterClothesRequest request) {
         Clothes clothes = Clothes.builder()
                 .userId(userId)
                 .name(request.getName())
@@ -111,7 +106,7 @@ public class ClosetService {
                 .color(request.getColor())
                 .suitableForRain(request.isSuitableForRain())
                 .situationKeywords(String.join(",", request.getSituationKeywords()))
-                .imageUrl(imageUrl)
+                .imageUrl(request.getImageUrl())
                 .isFavorite(false)
                 .wearCount(0)
                 .isDeleted(false)
@@ -128,7 +123,7 @@ public class ClosetService {
     }
 
     @Transactional
-    public void updateClothes(Long userId, Long clothesId, MultipartFile image, UpdateClothesRequest request) throws IOException {
+    public void updateClothes(Long userId, Long clothesId, UpdateClothesRequest request) {
         Clothes clothes = clothesRepository.findById(clothesId)
                 .orElseThrow(() -> new CustomException(ClosetErrorCode.CLOTHES_NOT_FOUND));
 
@@ -137,10 +132,9 @@ public class ClosetService {
             throw new CustomException(ClosetErrorCode.NO_AUTHORITY);
         }
 
-        // 이미지가 있으면 S3에 업로드 후 기존 이미지 수정
-        if (image != null && !image.isEmpty()) {
-            String imageUrl = s3Uploader.upload(image, "closet");
-            clothes.updateImageUrl(imageUrl);
+        // 이미지 URL이 있으면 기존 이미지 수정
+        if (request.getImageUrl() != null && !request.getImageUrl().isEmpty()) {
+            clothes.updateImageUrl(request.getImageUrl());
         }
 
         // 나머지 정보 수정
