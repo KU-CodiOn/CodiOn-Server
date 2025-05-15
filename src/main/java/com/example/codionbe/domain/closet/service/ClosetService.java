@@ -143,7 +143,7 @@ public class ClosetService {
                 request.getCategory(),
                 request.getPersonalColor(),
                 request.getColor(),
-                request.getSuitableForRain(),
+                request.isSuitableForRain(),
                 request.getSituationKeywords()
         );
     }
