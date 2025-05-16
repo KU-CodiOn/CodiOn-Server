@@ -31,6 +31,7 @@ public interface CoordinationApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "COORD_001",
                               "message": "코디 등록에 성공했습니다.",
                               "data": null
@@ -48,6 +49,7 @@ public interface CoordinationApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "COORD_002",
                               "message": "코디 수정에 성공했습니다.",
                               "data": null
@@ -57,6 +59,7 @@ public interface CoordinationApi {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": false,
                               "code": "COORD_101",
                               "message": "유효하지 않은 옷 정보입니다."
                             }
@@ -73,6 +76,7 @@ public interface CoordinationApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "COORD_003",
                               "message": "코디 상세 조회에 성공했습니다.",
                               "data": {
@@ -87,6 +91,7 @@ public interface CoordinationApi {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": false,
                               "code": "COORD_102",
                               "message": "해당 날짜의 코디를 찾을 수 없습니다."
                             }
@@ -103,6 +108,7 @@ public interface CoordinationApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "COORD_004",
                               "message": "코디 삭제에 성공했습니다.",
                               "data": null
@@ -112,6 +118,7 @@ public interface CoordinationApi {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": false,
                               "code": "COORD_102",
                               "message": "해당 날짜의 코디를 찾을 수 없습니다."
                             }
