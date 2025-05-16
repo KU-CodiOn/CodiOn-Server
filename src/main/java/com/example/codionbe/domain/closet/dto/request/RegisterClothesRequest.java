@@ -21,6 +21,9 @@ public class RegisterClothesRequest {
     @Schema(description = "색상", example = "WHITE")
     private String color;
 
+    @Schema(description = "이미지 URL", example = "https://s3.amazonaws.com/bucket/image.jpg")
+    private String imageUrl;
+
     @Schema(description = "비 오는 날 착용 가능 여부", example = "true")
     private boolean suitableForRain;
 
