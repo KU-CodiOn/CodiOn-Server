@@ -30,6 +30,7 @@ public interface CommentApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "COMMENT_001",
                               "message": "코멘트 등록에 성공했습니다.",
                               "data": null
@@ -39,6 +40,7 @@ public interface CommentApi {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": false,
                               "code": "COMMENT_102",
                               "message": "이미 코멘트가 등록되어 있습니다."
                             }
@@ -47,6 +49,7 @@ public interface CommentApi {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": false,
                               "code": "COMMENT_103",
                               "message": "해당 날짜의 코디가 존재하지 않습니다."
                             }
@@ -63,6 +66,7 @@ public interface CommentApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "COMMENT_002",
                               "message": "코멘트 수정에 성공했습니다.",
                               "data": null
@@ -72,6 +76,7 @@ public interface CommentApi {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": false,
                               "code": "COMMENT_103",
                               "message": "해당 날짜의 코디가 존재하지 않습니다."
                             }
@@ -88,6 +93,7 @@ public interface CommentApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "COMMENT_003",
                               "message": "코멘트 삭제에 성공했습니다.",
                               "data": null
@@ -97,6 +103,7 @@ public interface CommentApi {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": false,
                               "code": "COMMENT_103",
                               "message": "해당 날짜의 코디가 존재하지 않습니다."
                             }

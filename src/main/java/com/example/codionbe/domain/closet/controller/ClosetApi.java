@@ -17,11 +17,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,6 +34,7 @@ public interface ClosetApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "CLOSET_007",
                               "message": "이미지 분석에 성공했습니다.",
                               "data": {
@@ -59,6 +58,7 @@ public interface ClosetApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "CLOSET_001",
                               "message": "옷 등록에 성공했습니다.",
                               "data": null
@@ -77,6 +77,7 @@ public interface ClosetApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "CLOSET_002",
                               "message": "MY 옷장 목록 조회에 성공했습니다.",
                               "data": [ ]
@@ -95,6 +96,7 @@ public interface ClosetApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "CLOSET_003",
                               "message": "옷 수정에 성공했습니다.",
                               "data": null
@@ -104,6 +106,7 @@ public interface ClosetApi {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": false,
                               "code": "CLOSET_101",
                               "message": "해당 옷을 찾을 수 없습니다."
                             }
@@ -112,6 +115,7 @@ public interface ClosetApi {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": false,
                               "code": "CLOSET_102",
                               "message": "해당 옷에 대한 권한이 없습니다."
                             }
@@ -130,6 +134,7 @@ public interface ClosetApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "CLOSET_004",
                               "message": "옷 삭제에 성공했습니다.",
                               "data": null
@@ -148,6 +153,7 @@ public interface ClosetApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "CLOSET_006",
                               "message": "옷 상세 조회에 성공했습니다.",
                               "data": {
@@ -177,6 +183,7 @@ public interface ClosetApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "CLOSET_005",
                               "message": "즐겨찾기 상태가 변경되었습니다.",
                               "data": {

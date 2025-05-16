@@ -33,6 +33,7 @@ public interface AuthApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "AUTH_001",
                               "message": "회원가입이 성공적으로 완료되었습니다.",
                               "data": {
@@ -46,6 +47,7 @@ public interface AuthApi {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": false,
                               "code": "AUTH_102",
                               "message": "비밀번호와 비밀번호 확인이 일치하지 않습니다."
                             }
@@ -54,6 +56,7 @@ public interface AuthApi {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": false,
                               "code": "AUTH_101",
                               "message": "이미 사용 중인 이메일입니다."
                             }
@@ -70,6 +73,7 @@ public interface AuthApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "AUTH_002",
                               "message": "로그인이 성공적으로 완료되었습니다.",
                               "data": {
@@ -82,6 +86,7 @@ public interface AuthApi {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": false,
                               "code": "AUTH_104",
                               "message": "비밀번호가 일치하지 않습니다."
                             }
@@ -90,6 +95,7 @@ public interface AuthApi {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": false,
                               "code": "AUTH_103",
                               "message": "사용자를 찾을 수 없습니다."
                             }
@@ -106,6 +112,7 @@ public interface AuthApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "AUTH_003",
                               "message": "토큰이 성공적으로 재발급되었습니다.",
                               "data": {
@@ -117,6 +124,7 @@ public interface AuthApi {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": false,
                               "code": "AUTH_107",
                               "message": "유효하지 않은 JWT 토큰입니다."
                             }
@@ -137,6 +145,7 @@ public interface AuthApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "AUTH_004",
                               "message": "로그아웃 성공",
                               "data": null
@@ -146,6 +155,7 @@ public interface AuthApi {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": false,
                               "code": "AUTH_105",
                               "message": "인증 정보가 유효하지 않습니다."
                             }

@@ -35,6 +35,7 @@ public interface MyPageApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "MYPAGE_001",
                               "message": "회원 정보 조회 성공",
                               "data": {
@@ -48,6 +49,7 @@ public interface MyPageApi {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": false,
                               "code": "AUTH_105",
                               "message": "인증 정보가 유효하지 않습니다."
                             }
@@ -68,6 +70,7 @@ public interface MyPageApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "MYPAGE_002",
                               "message": "회원 정보 수정 성공",
                               "data": {
@@ -81,6 +84,7 @@ public interface MyPageApi {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": false,
                               "code": "AUTH_105",
                               "message": "인증 정보가 유효하지 않습니다."
                             }
@@ -102,6 +106,7 @@ public interface MyPageApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "MYPAGE_003",
                               "message": "비밀번호 변경 성공",
                               "data": null
@@ -111,6 +116,7 @@ public interface MyPageApi {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": false,
                               "code": "AUTH_102",
                               "message": "비밀번호와 비밀번호 확인이 일치하지 않습니다."
                             }
@@ -119,6 +125,7 @@ public interface MyPageApi {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": false,
                               "code": "AUTH_105",
                               "message": "인증 정보가 유효하지 않습니다."
                             }
@@ -140,6 +147,7 @@ public interface MyPageApi {
                     content = @Content(schema = @Schema(implementation = SuccessResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": true,
                               "code": "MYPAGE_004",
                               "message": "회원 탈퇴 성공",
                               "data": null
@@ -149,6 +157,7 @@ public interface MyPageApi {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class),
                             examples = @ExampleObject(value = """
                             {
+                              "isSuccess": false,
                               "code": "AUTH_105",
                               "message": "인증 정보가 유효하지 않습니다."
                             }
