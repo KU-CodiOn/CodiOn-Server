@@ -19,10 +19,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
     private String nickname;
 
-    @Column(nullable = false)
     private String personalColor;
 
     @Enumerated(EnumType.STRING)
@@ -31,6 +29,11 @@ public class User {
     public enum Role {
         USER, ADMIN
     }
+
+    @Enumerated(EnumType.STRING)
+    private SocialType socialType; // KAKAO, NONE 등
+
+    private boolean isSocial = false; // 소셜 계정 여부
 
     @Column(nullable = false)
     private boolean isDeleted = false;
@@ -44,5 +47,10 @@ public class User {
     }
     public void markAsDeleted() {
         this.isDeleted = true;
+    }
+
+    public void updateAdditionalInfo(String nickname, String personalColor) {
+        this.nickname = nickname;
+        this.personalColor = personalColor;
     }
 }

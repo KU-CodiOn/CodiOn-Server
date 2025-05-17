@@ -1,8 +1,6 @@
 package com.example.codionbe.domain.member.controller;
 
-import com.example.codionbe.domain.member.dto.request.LoginRequest;
-import com.example.codionbe.domain.member.dto.request.SignUpRequest;
-import com.example.codionbe.domain.member.dto.request.TokenRefreshRequest;
+import com.example.codionbe.domain.member.dto.request.*;
 import com.example.codionbe.domain.member.dto.response.LoginResponse;
 import com.example.codionbe.domain.member.dto.response.SignUpResponse;
 import com.example.codionbe.domain.member.dto.response.TokenRefreshResponse;
@@ -21,6 +19,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -78,7 +77,8 @@ public interface AuthApi {
                               "message": "로그인이 성공적으로 완료되었습니다.",
                               "data": {
                                 "accessToken": "access-token-value",
-                                "refreshToken": "refresh-token-value"
+                                "refreshToken": "refresh-token-value",
+                                "user": null
                               }
                             }
                             """))),
@@ -165,5 +165,67 @@ public interface AuthApi {
     ResponseEntity<SuccessResponse<Void>> logout(
             @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
     );
+
+    @Operation(summary = "카카오 로그인 API", description = "카카오 인가 코드를 이용한 로그인")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "카카오 로그인 성공",
+                    content = @Content(schema = @Schema(implementation = SuccessResponse.class),
+                            examples = @ExampleObject(value = """
+                            {
+                              "isSuccess": true,
+                              "code": "AUTH_002",
+                              "message": "로그인이 성공적으로 완료되었습니다.",
+                              "data": {
+                                "accessToken": "access-token-value",
+                                "refreshToken": "refresh-token-value",
+                                "user": {
+                                  "email": "test@kakao.com",
+                                  "nickname": null,
+                                  "personalColor": null,
+                                  "isSocial": true
+                                }
+                              }
+                            }
+                            """)))
+    })
+    @PostMapping("/kakao")
+    ResponseEntity<SuccessResponse<LoginResponse>> kakaoLogin(@RequestBody KakaoLoginRequest request);
+
+    @Operation(summary = "소셜 회원가입 추가 정보 입력 API", description = "nickname과 퍼스널컬러를 입력받아 소셜회원 가입을 완료합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "소셜 회원가입 정보 입력 성공",
+                    content = @Content(schema = @Schema(implementation = SuccessResponse.class),
+                            examples = @ExampleObject(value = """
+                            {
+                              "isSuccess": true,
+                              "code": "AUTH_005",
+                              "message": "소셜 회원가입 추가 정보 입력 성공했습니다.",
+                              "data": null
+                            }
+                            """))),
+            @ApiResponse(responseCode = "400", description = "잘못된 요청",
+                    content = @Content(schema = @Schema(implementation = ErrorResponse.class),
+                            examples = {
+                                    @ExampleObject(name = "소셜 아님", value = """
+                                {
+                                  "isSuccess": false,
+                                  "code": "AUTH_108",
+                                  "message": "소셜 로그인 유저가 아닙니다."
+                                }
+                                """),
+                                    @ExampleObject(name = "이미 입력 완료", value = """
+                                {
+                                  "isSuccess": false,
+                                  "code": "AUTH_109",
+                                  "message": "이미 추가정보가 등록된 유저입니다."
+                                }
+                                """)
+                            }))
+    })
+    @PatchMapping("/complete-social")
+    ResponseEntity<SuccessResponse<Void>> completeSocialSignup(
+            @RequestBody CompleteSocialSignupRequest request,
+            @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails);
+
 }
 
