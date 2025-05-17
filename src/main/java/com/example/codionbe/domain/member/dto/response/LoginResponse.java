@@ -16,5 +16,6 @@ public class LoginResponse {
     @Schema(description = "Refresh Token", example = "refresh-token-value")
     private String refreshToken;
 
+    @Schema(description = "유저 정보")
     private UserInfoDto user;
 }
