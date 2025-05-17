@@ -1,5 +1,6 @@
 package com.example.codionbe.domain.member.controller;
 
+import com.example.codionbe.domain.member.dto.request.KakaoLoginRequest;
 import com.example.codionbe.domain.member.dto.request.LoginRequest;
 import com.example.codionbe.domain.member.dto.request.SignUpRequest;
 import com.example.codionbe.domain.member.dto.request.TokenRefreshRequest;
@@ -165,5 +166,11 @@ public interface AuthApi {
     ResponseEntity<SuccessResponse<Void>> logout(
             @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
     );
+
+    @Operation(summary = "카카오 로그인 API", description = "카카오 인가 코드를 이용한 로그인")
+    @ApiResponse(responseCode = "200", description = "카카오 로그인 성공")
+    @PostMapping("/kakao")
+    ResponseEntity<SuccessResponse<LoginResponse>> kakaoLogin(@RequestBody KakaoLoginRequest request);
+
 }
 

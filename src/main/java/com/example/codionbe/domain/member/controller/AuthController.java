@@ -1,5 +1,6 @@
 package com.example.codionbe.domain.member.controller;
 
+import com.example.codionbe.domain.member.dto.request.KakaoLoginRequest;
 import com.example.codionbe.domain.member.dto.request.LoginRequest;
 import com.example.codionbe.domain.member.dto.request.SignUpRequest;
 import com.example.codionbe.domain.member.dto.request.TokenRefreshRequest;
@@ -48,4 +49,12 @@ public class AuthController implements AuthApi {
         authService.logout(userDetails.getUser().getId());
         return ResponseEntity.ok(new SuccessResponse<>(AuthSuccessCode.LOGOUT_SUCCESS, null));
     }
+
+    @Override
+    @PostMapping("/kakao")
+    public ResponseEntity<SuccessResponse<LoginResponse>> kakaoLogin(@RequestBody KakaoLoginRequest request) {
+        LoginResponse response = authService.kakaoLogin(request.getCode());
+        return ResponseEntity.ok(new SuccessResponse<>(AuthSuccessCode.LOGIN_SUCCESS, response));
+    }
+
 }
