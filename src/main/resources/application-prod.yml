@@ -28,5 +28,10 @@ cloud:
     stack:
       auto: false
 
+oauth:
+  kakao:
+    client-id: ${KAKAO_CLIENT_ID}
+    redirect-uri: ${KAKAO_REDIRECT_URI}
+
 server:
   port: 8080
