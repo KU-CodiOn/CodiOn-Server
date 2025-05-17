@@ -77,7 +77,8 @@ public interface AuthApi {
                               "message": "로그인이 성공적으로 완료되었습니다.",
                               "data": {
                                 "accessToken": "access-token-value",
-                                "refreshToken": "refresh-token-value"
+                                "refreshToken": "refresh-token-value",
+                                "user": null
                               }
                             }
                             """))),
