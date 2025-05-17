@@ -8,7 +8,9 @@ public enum AuthSuccessCode implements SuccessCode {
     SIGNUP_SUCCESS(HttpStatus.OK, "AUTH_001", "회원가입이 성공적으로 완료되었습니다."),
     LOGIN_SUCCESS(HttpStatus.OK, "AUTH_002", "로그인이 성공적으로 완료되었습니다."),
     TOKEN_REFRESH_SUCCESS(HttpStatus.OK, "AUTH_003", "토큰이 성공적으로 재발급되었습니다."),
-    LOGOUT_SUCCESS(HttpStatus.OK, "AUTH_004", "로그아웃 성공");
+    LOGOUT_SUCCESS(HttpStatus.OK, "AUTH_004", "로그아웃 성공"),
+    SOCIAL_SIGNUP_COMPLETE_SUCCESS(HttpStatus.OK, "AUTH_005", "소셜 회원가입 추가 정보 입력 성공했습니다.");
+
 
     private final HttpStatus status;
     private final String code;

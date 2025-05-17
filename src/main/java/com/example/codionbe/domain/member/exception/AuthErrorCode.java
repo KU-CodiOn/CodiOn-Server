@@ -11,7 +11,10 @@ public enum AuthErrorCode implements ErrorCode {
     INVALID_PASSWORD(HttpStatus.UNAUTHORIZED, "AUTH_104", "비밀번호가 일치하지 않습니다."),
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "AUTH_105", "인증 정보가 유효하지 않습니다."),
     TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "AUTH_106", "JWT 토큰이 만료되었습니다."),
-    INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "AUTH_107", "유효하지 않은 JWT 토큰입니다.");
+    INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "AUTH_107", "유효하지 않은 JWT 토큰입니다."),
+    NOT_SOCIAL_USER(HttpStatus.BAD_REQUEST, "AUTH_108", "소셜 로그인 유저가 아닙니다."),
+    SOCIAL_ALREADY_COMPLETED(HttpStatus.BAD_REQUEST, "AUTH_109", "이미 추가정보가 등록된 유저입니다.");
+
 
     private final HttpStatus status;
     private final String code;

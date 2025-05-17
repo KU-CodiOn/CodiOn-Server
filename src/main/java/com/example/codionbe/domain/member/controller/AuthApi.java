@@ -1,9 +1,6 @@
 package com.example.codionbe.domain.member.controller;
 
-import com.example.codionbe.domain.member.dto.request.KakaoLoginRequest;
-import com.example.codionbe.domain.member.dto.request.LoginRequest;
-import com.example.codionbe.domain.member.dto.request.SignUpRequest;
-import com.example.codionbe.domain.member.dto.request.TokenRefreshRequest;
+import com.example.codionbe.domain.member.dto.request.*;
 import com.example.codionbe.domain.member.dto.response.LoginResponse;
 import com.example.codionbe.domain.member.dto.response.SignUpResponse;
 import com.example.codionbe.domain.member.dto.response.TokenRefreshResponse;
@@ -22,6 +19,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -171,6 +169,13 @@ public interface AuthApi {
     @ApiResponse(responseCode = "200", description = "카카오 로그인 성공")
     @PostMapping("/kakao")
     ResponseEntity<SuccessResponse<LoginResponse>> kakaoLogin(@RequestBody KakaoLoginRequest request);
+
+    @Operation(summary = "소셜 회원가입 추가 정보 입력 API", description = "nickname과 퍼스널컬러를 입력받아 소셜회원 가입을 완료합니다.")
+    @ApiResponse(responseCode = "200", description = "소셜 회원가입 정보 입력 성공")
+    @PatchMapping("/complete-social")
+    ResponseEntity<SuccessResponse<Void>> completeSocialSignup(
+            @RequestBody CompleteSocialSignupRequest request,
+            @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails);
 
 }
 

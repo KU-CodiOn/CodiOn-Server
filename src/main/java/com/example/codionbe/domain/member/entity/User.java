@@ -48,4 +48,9 @@ public class User {
     public void markAsDeleted() {
         this.isDeleted = true;
     }
+
+    public void updateAdditionalInfo(String nickname, String personalColor) {
+        this.nickname = nickname;
+        this.personalColor = personalColor;
+    }
 }

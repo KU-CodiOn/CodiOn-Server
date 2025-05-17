@@ -1,6 +1,8 @@
 package com.example.codionbe.domain.member.service;
 
 import com.example.codionbe.domain.member.dto.KakaoUserInfo;
+import com.example.codionbe.domain.member.dto.UserInfoDto;
+import com.example.codionbe.domain.member.dto.request.CompleteSocialSignupRequest;
 import com.example.codionbe.domain.member.entity.SocialType;
 import com.example.codionbe.domain.member.repository.UserRepository;
 import com.example.codionbe.domain.member.entity.User;
@@ -73,7 +75,7 @@ public class AuthService {
 
         refreshTokenRepository.save(new RefreshToken(user.getId(), refreshToken));
 
-        return new LoginResponse(accessToken, refreshToken);
+        return new LoginResponse(accessToken, refreshToken, null);
     }
 
     public TokenRefreshResponse refreshAccessToken(String refreshToken) {
@@ -129,7 +131,29 @@ public class AuthService {
         String refreshToken = jwtProvider.generateRefreshToken(user);
         refreshTokenRepository.save(new RefreshToken(user.getId(), refreshToken));
 
-        return new LoginResponse(accessToken, refreshToken);
+        return new LoginResponse(accessToken, refreshToken,
+                new UserInfoDto(
+                        user.getEmail(),
+                        user.getNickname(),
+                        user.getPersonalColor(),
+                        user.isSocial()
+                ));
+    }
+
+    @Transactional
+    public void completeSocialSignup(Long userId, CompleteSocialSignupRequest request) {
+        User user = userRepository.findByIdAndIsDeletedFalse(userId)
+                .orElseThrow(() -> new CustomException(AuthErrorCode.USER_NOT_FOUND));
+
+        if (!user.isSocial()) {
+            throw new CustomException(AuthErrorCode.NOT_SOCIAL_USER);
+        }
+
+        if (user.getNickname() != null && user.getPersonalColor() != null) {
+            throw new CustomException(AuthErrorCode.SOCIAL_ALREADY_COMPLETED);
+        }
+
+        user.updateAdditionalInfo(request.getNickname(), request.getPersonalColor());
     }
 
 }

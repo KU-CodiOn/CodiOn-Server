@@ -1,9 +1,6 @@
 package com.example.codionbe.domain.member.controller;
 
-import com.example.codionbe.domain.member.dto.request.KakaoLoginRequest;
-import com.example.codionbe.domain.member.dto.request.LoginRequest;
-import com.example.codionbe.domain.member.dto.request.SignUpRequest;
-import com.example.codionbe.domain.member.dto.request.TokenRefreshRequest;
+import com.example.codionbe.domain.member.dto.request.*;
 import com.example.codionbe.domain.member.dto.response.LoginResponse;
 import com.example.codionbe.domain.member.dto.response.SignUpResponse;
 import com.example.codionbe.domain.member.dto.response.TokenRefreshResponse;
@@ -55,6 +52,16 @@ public class AuthController implements AuthApi {
     public ResponseEntity<SuccessResponse<LoginResponse>> kakaoLogin(@RequestBody KakaoLoginRequest request) {
         LoginResponse response = authService.kakaoLogin(request.getCode());
         return ResponseEntity.ok(new SuccessResponse<>(AuthSuccessCode.LOGIN_SUCCESS, response));
+    }
+
+    @Override
+    @PatchMapping("/complete-social")
+    public ResponseEntity<SuccessResponse<Void>> completeSocialSignup(
+            CompleteSocialSignupRequest request,
+            CustomUserDetails userDetails) {
+
+        authService.completeSocialSignup(userDetails.getUser().getId(), request);
+        return ResponseEntity.ok(new SuccessResponse<>(AuthSuccessCode.SOCIAL_SIGNUP_COMPLETE_SUCCESS, null));
     }
 
 }
