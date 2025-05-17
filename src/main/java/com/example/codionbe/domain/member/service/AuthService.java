@@ -48,6 +48,8 @@ public class AuthService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .nickname(request.getNickname())
                 .personalColor(request.getPersonalColor())
+                .isSocial(false)
+                .socialType(SocialType.NONE)
                 .role(User.Role.USER)
                 .build();
 
