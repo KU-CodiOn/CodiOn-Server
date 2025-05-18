@@ -18,12 +18,10 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "회원", description = "회원 관련 API")
+@RequestMapping("/auth")
 public interface AuthApi {
 
     @Operation(summary = "회원가입 API", description = "이메일, 비밀번호, 닉네임, 퍼스널컬러 정보를 입력받아 회원가입을 진행합니다.")
