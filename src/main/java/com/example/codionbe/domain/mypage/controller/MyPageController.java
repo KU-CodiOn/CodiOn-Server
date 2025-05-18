@@ -14,13 +14,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/mypage")
 public class MyPageController implements MyPageApi {
 
     private final MyPageService myPageService;
 
     @Override
-    @GetMapping("")
     public ResponseEntity<SuccessResponse<MyPageResponse>> getMyPage(
             @AuthenticationPrincipal CustomUserDetails userDetails) {
 
@@ -29,7 +27,6 @@ public class MyPageController implements MyPageApi {
     }
 
     @Override
-    @PatchMapping("")
     public ResponseEntity<SuccessResponse<MyPageResponse>> updateProfile(
             @RequestBody UpdateProfileRequest request,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -39,7 +36,6 @@ public class MyPageController implements MyPageApi {
     }
 
     @Override
-    @PatchMapping("/password")
     public ResponseEntity<SuccessResponse<Void>> updatePassword(
             @RequestBody UpdatePasswordRequest request,
             @AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -49,7 +45,6 @@ public class MyPageController implements MyPageApi {
     }
 
     @Override
-    @DeleteMapping
     public ResponseEntity<SuccessResponse<Void>> deleteUser(
             @AuthenticationPrincipal CustomUserDetails userDetails) {
 

@@ -17,12 +17,10 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "마이페이지", description = "마이페이지 관련 API")
+@RequestMapping("/mypage")
 public interface MyPageApi {
 
     @Operation(
@@ -55,7 +53,7 @@ public interface MyPageApi {
                             }
                             """)))
     })
-    @GetMapping("")
+    @GetMapping
     ResponseEntity<SuccessResponse<MyPageResponse>> getMyPage(
             @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
     );
@@ -90,7 +88,7 @@ public interface MyPageApi {
                             }
                             """)))
     })
-    @PatchMapping("")
+    @PatchMapping
     ResponseEntity<SuccessResponse<MyPageResponse>> updateProfile(
             @RequestBody @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "회원 프로필 수정 요청") UpdateProfileRequest request,
             @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails

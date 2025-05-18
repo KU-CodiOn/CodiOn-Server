@@ -15,32 +15,27 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth")
 public class AuthController implements AuthApi {
 
     private final AuthService authService;
 
     @Override
-    @PostMapping("/signup")
     public ResponseEntity<SuccessResponse<SignUpResponse>> signup(@RequestBody SignUpRequest request) {
         SignUpResponse response = authService.signup(request);
         return ResponseEntity.ok(new SuccessResponse<>(AuthSuccessCode.SIGNUP_SUCCESS, response));
     }
 
     @Override
-    @PostMapping("/login")
     public ResponseEntity<SuccessResponse<LoginResponse>> login(@RequestBody LoginRequest request) {
         LoginResponse response = authService.login(request);
         return ResponseEntity.ok(new SuccessResponse<>(AuthSuccessCode.LOGIN_SUCCESS, response));
     }
 
-    @PostMapping("/refresh")
     public ResponseEntity<SuccessResponse<TokenRefreshResponse>> refresh(@RequestBody TokenRefreshRequest request) {
         TokenRefreshResponse response = authService.refreshAccessToken(request.getRefreshToken());
         return ResponseEntity.ok(new SuccessResponse<>(AuthSuccessCode.TOKEN_REFRESH_SUCCESS, response));
     }
 
-    @DeleteMapping("/logout")
     @Override
     public ResponseEntity<SuccessResponse<Void>> logout(@AuthenticationPrincipal CustomUserDetails userDetails) {
         authService.logout(userDetails.getUser().getId());
@@ -48,14 +43,12 @@ public class AuthController implements AuthApi {
     }
 
     @Override
-    @PostMapping("/kakao")
     public ResponseEntity<SuccessResponse<LoginResponse>> kakaoLogin(@RequestBody KakaoLoginRequest request) {
         LoginResponse response = authService.kakaoLogin(request.getCode());
         return ResponseEntity.ok(new SuccessResponse<>(AuthSuccessCode.LOGIN_SUCCESS, response));
     }
 
     @Override
-    @PatchMapping("/complete-social")
     public ResponseEntity<SuccessResponse<Void>> completeSocialSignup(
             CompleteSocialSignupRequest request,
             CustomUserDetails userDetails) {
