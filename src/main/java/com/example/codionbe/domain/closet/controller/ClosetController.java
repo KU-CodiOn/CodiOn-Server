@@ -12,6 +12,7 @@ import com.example.codionbe.global.auth.CustomUserDetails;
 import com.example.codionbe.global.common.success.SuccessResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,9 +27,8 @@ public class ClosetController implements ClosetApi {
     private final ClosetService closetService;
 
     @Override
-    public ResponseEntity<SuccessResponse<ImageAnalysisResponse>> uploadAndAnalyzeImage(Map<String, String> request, CustomUserDetails userDetails) throws IOException {
-        String imageUrl = request.get("image_url");
-        ImageAnalysisResponse response = closetService.uploadAndAnalyzeImage(imageUrl);
+    public ResponseEntity<SuccessResponse<ImageAnalysisResponse>> uploadAndAnalyzeImage(MultipartFile image, CustomUserDetails userDetails) throws IOException {
+        ImageAnalysisResponse response = closetService.uploadAndAnalyzeImage(image);
         return ResponseEntity.ok(new SuccessResponse<>(ClosetSuccessCode.IMAGE_ANALYSIS_SUCCESS, response));
     }
 
