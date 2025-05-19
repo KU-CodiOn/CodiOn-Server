@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,28 +29,12 @@ import java.util.Map;
 @Tag(name = "MY 옷장", description = "MY 옷장 관련 API")
 @RequestMapping("/closet")
 public interface ClosetApi {
-    @Operation(summary = "이미지 분석 API", description = "이미지 URL을 전송하여 해당 이미지에 대한 분석 결과를 반환합니다.")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "이미지 분석 성공",
-                    content = @Content(schema = @Schema(implementation = SuccessResponse.class),
-                            examples = @ExampleObject(value = """
-                            {
-                              "isSuccess": true,
-                              "code": "CLOSET_007",
-                              "message": "이미지 분석에 성공했습니다.",
-                              "data": {
-                                "imageUrl": "https://s3.amazonaws.com/bucket/image.jpg",
-                                "category": "TOP",
-                                "personalColor": "SUMMER",
-                                "color": "Light Blue"
-                              }
-                            }
-                            """)))
-    })
+    @Operation(summary = "이미지 업로드 및 분석", description = "이미지를 업로드하고 AI로 분석합니다.")
+    @ApiResponse(responseCode = "200", description = "이미지 분석 성공")
     @PostMapping(value = "/image")
     ResponseEntity<SuccessResponse<ImageAnalysisResponse>> uploadAndAnalyzeImage(
-            @RequestBody Map<String, String> request,
-            @Parameter(hidden = true) @AuthenticationPrincipal CustomUserDetails userDetails
+            @Parameter(description = "분석할 이미지 파일") @RequestParam("image") MultipartFile image,
+            @Parameter(hidden = true) CustomUserDetails userDetails
     ) throws IOException;
 
     @Operation(summary = "옷 등록 API", description = "새로운 옷의 정보를 등록합니다.")
