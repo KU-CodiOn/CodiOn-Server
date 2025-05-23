@@ -33,7 +33,7 @@ public interface ClosetApi {
     @ApiResponse(responseCode = "200", description = "이미지 분석 성공")
     @PostMapping(value = "/image")
     ResponseEntity<SuccessResponse<ImageAnalysisResponse>> uploadAndAnalyzeImage(
-            @Parameter(description = "분석할 이미지 파일") @RequestParam("image") MultipartFile image,
+            @Parameter(description = "분석할 이미지 파일") @RequestPart("image") MultipartFile image,
             @Parameter(hidden = true) CustomUserDetails userDetails
     ) throws IOException;
 
