@@ -29,7 +29,7 @@ public class PersonalColorService {
     public PersonalColorResponse analyzePersonalColor(MultipartFile image) throws IOException {
         // 1. S3에 이미지 업로드
         String imageUrl = s3Uploader.upload(image, "personalColor");
-        
+
         // 2. 파이썬 서버에 이미지 URL 전송하여 분석 요청
         String analysisUrl = "http://43.203.196.176/analyze/fashion/url";
         
@@ -54,7 +54,7 @@ public class PersonalColorService {
         
         // 응답 데이터에서 퍼스널컬러 추출
         String personalColorEnglish = analysisResult.get("퍼스널컬러").asText().toLowerCase();
-        
+
         // 영문 계절명을 한글 퍼스널컬러로 매핑
         String personalColorKorean = mapToKoreanPersonalColor(personalColorEnglish);
         
