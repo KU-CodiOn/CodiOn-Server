@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ import java.util.Map;
 public interface ClosetApi {
     @Operation(summary = "이미지 업로드 및 분석", description = "이미지를 업로드하고 AI로 분석합니다.")
     @ApiResponse(responseCode = "200", description = "이미지 분석 성공")
-    @PostMapping(value = "/image")
+    @PostMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ResponseEntity<SuccessResponse<ImageAnalysisResponse>> uploadAndAnalyzeImage(
             @Parameter(description = "분석할 이미지 파일") @RequestPart("image") MultipartFile image,
             @Parameter(hidden = true) CustomUserDetails userDetails
