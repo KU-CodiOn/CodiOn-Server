@@ -34,15 +34,7 @@ public interface ClosetApi {
     @Operation(summary = "이미지 업로드 및 분석", description = "이미지를 업로드하고 AI로 분석합니다.")
     @ApiResponse(responseCode = "200", description = "이미지 분석 성공")
     @PostMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    ResponseEntity<SuccessResponse<ImageAnalysisResponse>> uploadAndAnalyzeImage(
-            @Parameter(description = "분석할 이미지 파일") @RequestPart("image") MultipartFile image,
-            @Parameter(hidden = true) CustomUserDetails userDetails
-    ) throws IOException;
-
-    @Operation(summary = "새 형식 이미지 분석", description = "이미지를 업로드하고 새로운 형식으로 AI 분석합니다.")
-    @ApiResponse(responseCode = "200", description = "이미지 분석 성공")
-    @PostMapping(value = "/analyze", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    ResponseEntity<SuccessResponse<ClothesAnalysisResponse>> analyzeClothesImage(
+    ResponseEntity<SuccessResponse<ClothesAnalysisResponse>> uploadAndAnalyzeImage(
             @Parameter(description = "분석할 이미지 파일") @RequestPart("image") MultipartFile image,
             @Parameter(hidden = true) CustomUserDetails userDetails
     ) throws IOException;
