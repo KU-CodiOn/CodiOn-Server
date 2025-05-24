@@ -31,7 +31,7 @@ public class PersonalColorService {
         String imageUrl = s3Uploader.upload(image, "personalColor");
 
         // 2. 파이썬 서버에 이미지 URL 전송하여 분석 요청
-        String analysisUrl = "http://43.203.196.176/analyze/fashion/url";
+        String analysisUrl = "http://43.203.196.176/analyze/personal-color/url";
         
         // 요청 헤더 설정
         HttpHeaders headers = new HttpHeaders();
@@ -47,19 +47,43 @@ public class PersonalColorService {
         // 요청 전송 및 응답 수신
         String responseBody = restTemplate.postForObject(analysisUrl, request, String.class);
         
-        // 응답 파싱
-        JsonNode root = objectMapper.readTree(responseBody);
-        String result = root.get("result").asText();
-        JsonNode analysisResult = objectMapper.readTree(result);
-        
-        // 응답 데이터에서 퍼스널컬러 추출
-        String personalColorEnglish = analysisResult.get("퍼스널컬러").asText().toLowerCase();
-
-        // 영문 계절명을 한글 퍼스널컬러로 매핑
-        String personalColorKorean = mapToKoreanPersonalColor(personalColorEnglish);
-        
-        // 결과 반환 - PersonalColorResponse 생성자는 personalColor를 받음
-        return new PersonalColorResponse(personalColorKorean);
+        try {
+            // 응답 로그 확인 (디버깅용)
+            System.out.println("API 응답: " + responseBody);
+            
+            // 응답 파싱
+            JsonNode root = objectMapper.readTree(responseBody);
+            
+            // result 필드가 있는지 확인
+            if (root.has("result")) {
+                String result = root.get("result").asText();
+                
+                // 중첩된 JSON 문자열 파싱
+                JsonNode analysisResult = objectMapper.readTree(result);
+                
+                // "퍼스널컬러" 필드 확인
+                if (analysisResult.has("퍼스널컬러")) {
+                    String personalColorEnglish = analysisResult.get("퍼스널컬러").asText().toLowerCase();
+                    
+                    // 영문 계절명을 한글 퍼스널컬러로 매핑
+                    String personalColorKorean = mapToKoreanPersonalColor(personalColorEnglish);
+                    
+                    // 결과 반환
+                    return new PersonalColorResponse(personalColorKorean);
+                } else {
+                    // 필드가 없을 경우 대체 값 반환
+                    return new PersonalColorResponse("분석 불가");
+                }
+            } else {
+                // result 필드가 없을 경우 대체 값 반환
+                return new PersonalColorResponse("분석 불가");
+            }
+        } catch (Exception e) {
+            // 예외 발생 시 로그 출력 및 대체 값 반환
+            System.err.println("퍼스널컬러 분석 중 오류 발생: " + e.getMessage());
+            e.printStackTrace();
+            return new PersonalColorResponse("분석 오류");
+        }
     }
     
     /**
