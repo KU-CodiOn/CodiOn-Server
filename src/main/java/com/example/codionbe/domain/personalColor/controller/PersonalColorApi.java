@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +37,7 @@ public interface PersonalColorApi {
                             }
                             """)))
     })
-    @PostMapping("/analyze")
+    @PostMapping(value = "/analyze", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ResponseEntity<SuccessResponse<PersonalColorResponse>> analyzePersonalColor(
             @RequestPart("image") MultipartFile image
     ) throws IOException;
