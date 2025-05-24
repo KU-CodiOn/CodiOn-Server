@@ -127,6 +127,10 @@ public class ClosetService {
         JsonNode analysisResult = objectMapper.readTree(result);
 
         // 응답 데이터 추출 (새로운 형식)
+        // 응답 형식:
+        // {
+        //   "result": "{\n  \"main_category\": \"OUTER\",\n  \"sub_category\": \"JACKET\",\n  \"personalColor\": \"WINTER\",\n  \"color\": \"Black\"\n}"
+        // }
         String mainCategoryStr = analysisResult.get("main_category").asText();
         String subCategoryStr = analysisResult.get("sub_category").asText();
         String personalColorStr = analysisResult.get("personalColor").asText();

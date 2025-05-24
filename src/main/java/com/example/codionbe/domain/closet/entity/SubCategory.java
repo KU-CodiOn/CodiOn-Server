@@ -1,10 +1,8 @@
 package com.example.codionbe.domain.closet.entity;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
 public enum SubCategory {
     // TOP
     TSHIRT("티셔츠"),
@@ -29,4 +27,8 @@ public enum SubCategory {
     SKIRT("스커트");
 
     private final String displayName;
+    
+    SubCategory(String displayName) {
+        this.displayName = displayName;
+    }
 } 
