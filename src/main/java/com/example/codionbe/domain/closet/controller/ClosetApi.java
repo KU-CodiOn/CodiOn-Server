@@ -3,6 +3,7 @@ package com.example.codionbe.domain.closet.controller;
 import com.example.codionbe.domain.closet.dto.request.RegisterClothesRequest;
 import com.example.codionbe.domain.closet.dto.request.ClothesFilterRequest;
 import com.example.codionbe.domain.closet.dto.request.UpdateClothesRequest;
+import com.example.codionbe.domain.closet.dto.response.ClothesAnalysisResponse;
 import com.example.codionbe.domain.closet.dto.response.ClothesResponse;
 import com.example.codionbe.domain.closet.dto.response.FavoriteToggleResponse;
 import com.example.codionbe.domain.closet.dto.response.ImageAnalysisResponse;
@@ -34,6 +35,14 @@ public interface ClosetApi {
     @ApiResponse(responseCode = "200", description = "이미지 분석 성공")
     @PostMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     ResponseEntity<SuccessResponse<ImageAnalysisResponse>> uploadAndAnalyzeImage(
+            @Parameter(description = "분석할 이미지 파일") @RequestPart("image") MultipartFile image,
+            @Parameter(hidden = true) CustomUserDetails userDetails
+    ) throws IOException;
+
+    @Operation(summary = "새 형식 이미지 분석", description = "이미지를 업로드하고 새로운 형식으로 AI 분석합니다.")
+    @ApiResponse(responseCode = "200", description = "이미지 분석 성공")
+    @PostMapping(value = "/analyze", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    ResponseEntity<SuccessResponse<ClothesAnalysisResponse>> analyzeClothesImage(
             @Parameter(description = "분석할 이미지 파일") @RequestPart("image") MultipartFile image,
             @Parameter(hidden = true) CustomUserDetails userDetails
     ) throws IOException;
