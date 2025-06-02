@@ -6,7 +6,6 @@ import com.example.codionbe.domain.closet.dto.request.UpdateClothesRequest;
 import com.example.codionbe.domain.closet.dto.response.ClothesAnalysisResponse;
 import com.example.codionbe.domain.closet.dto.response.ClothesResponse;
 import com.example.codionbe.domain.closet.dto.response.FavoriteToggleResponse;
-import com.example.codionbe.domain.closet.dto.response.ImageAnalysisResponse;
 import com.example.codionbe.global.auth.CustomUserDetails;
 import com.example.codionbe.global.common.exception.ErrorResponse;
 import com.example.codionbe.global.common.success.SuccessResponse;
@@ -146,11 +145,12 @@ public interface ClosetApi {
                                 "clothesId": 1,
                                 "name": "화이트 셔츠",
                                 "imageUrl": "https://s3.amazonaws.com/bucket/image.jpg",
-                                "category": "TOP",
                                 "personalColor": "SUMMER",
                                 "color": "WHITE",
                                 "situationKeywords": ["데이트", "면접"],
                                 "wearCount": 0,
+                                "category": "TOP",
+                                "subCategory": "SHORT_SLEEVE",
                                 "favorite": false,
                                 "wearableWhenRainy": true
                               }
