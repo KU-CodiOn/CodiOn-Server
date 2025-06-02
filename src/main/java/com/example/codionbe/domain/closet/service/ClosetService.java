@@ -147,7 +147,7 @@ public class ClosetService {
         try {
             subCategory = SubCategory.valueOf(subCategoryStr);
         } catch (IllegalArgumentException e) {
-            subCategory = SubCategory.TSHIRT; // 기본값 설정
+            subCategory = SubCategory.SHORT_SLEEVE; // 기본값 설정
         }
 
         PersonalColor personalColor;
