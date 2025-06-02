@@ -25,7 +25,7 @@ public enum SubCategory {
     MIDI("미디 기장", Category.DRESS),
     LONG("롱 기장", Category.DRESS);
 
-    private final String name;
+    private final String displayName;
     private final Category parentCategory;
 }
 
