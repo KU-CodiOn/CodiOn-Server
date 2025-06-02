@@ -1,14 +1,20 @@
 package com.example.codionbe.domain.closet.repository;
 
 import com.example.codionbe.domain.closet.dto.request.ClothesFilterRequest;
+import com.example.codionbe.domain.closet.entity.Category;
 import com.example.codionbe.domain.closet.entity.Clothes;
 import com.example.codionbe.domain.closet.entity.QClothes;
+import com.example.codionbe.domain.closet.entity.SubCategory;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
 import java.util.List;
+
+import static com.example.codionbe.domain.closet.entity.QClothes.clothes;
 
 @Repository
 @RequiredArgsConstructor
@@ -24,6 +30,10 @@ public class ClothesRepositoryImpl implements com.example.codionbe.domain.closet
 
         builder.and(clothes.userId.eq(userId));
         builder.and(clothes.isDeleted.isFalse());
+
+        if (c.getCategory() != null) {
+            builder.and(eqCategory(c.getCategory()));
+        }
 
         if (c.getPersonalColor() != null)
             builder.and(clothes.personalColor.eq(c.getPersonalColor()));
@@ -51,5 +61,14 @@ public class ClothesRepositoryImpl implements com.example.codionbe.domain.closet
                 .where(builder)
                 .orderBy(clothes.wearCount.desc())
                 .fetch();
+    }
+
+    private BooleanExpression eqCategory(Category category) {
+        return category != null ? clothes.subCategory.stringValue().in(
+                Arrays.stream(SubCategory.values())
+                        .filter(sc -> sc.getParentCategory() == category)
+                        .map(Enum::name)
+                        .toList()
+        ) : null;
     }
 }
