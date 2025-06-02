@@ -9,6 +9,7 @@ import com.example.codionbe.domain.closet.entity.Category;
 import com.example.codionbe.domain.closet.entity.Clothes;
 import com.example.codionbe.domain.closet.dto.request.RegisterClothesRequest;
 import com.example.codionbe.domain.closet.entity.PersonalColor;
+import com.example.codionbe.domain.closet.entity.SubCategory;
 import com.example.codionbe.domain.closet.exception.ClosetErrorCode;
 import com.example.codionbe.domain.closet.repository.ClothesRepository;
 import com.example.codionbe.global.common.exception.CustomException;
@@ -16,7 +17,6 @@ import com.example.codionbe.global.s3.S3Uploader;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -98,7 +98,7 @@ public class ClosetService {
         Clothes clothes = Clothes.builder()
                 .userId(userId)
                 .name(request.getName())
-                .category(request.getCategory())
+                .subCategory(SubCategory.valueOf(request.getSubCategory()))
                 .personalColor(request.getPersonalColor())
                 .color(request.getColor())
                 .suitableForRain(request.isSuitableForRain())
@@ -137,7 +137,7 @@ public class ClosetService {
         // 나머지 정보 수정
         clothes.updateInfo(
                 request.getName(),
-                request.getCategory(),
+                request.getSubCategory(),
                 request.getPersonalColor(),
                 request.getColor(),
                 request.isSuitableForRain(),

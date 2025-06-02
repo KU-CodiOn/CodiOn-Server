@@ -24,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @Tag(name = "MY 옷장", description = "MY 옷장 관련 API")
 @RequestMapping("/closet")

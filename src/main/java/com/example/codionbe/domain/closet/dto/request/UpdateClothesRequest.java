@@ -12,8 +12,8 @@ public class UpdateClothesRequest {
     @Schema(description = "옷 이름", example = "화이트 셔츠")
     private String name;
 
-    @Schema(description = "카테고리", example = "TOP")
-    private String category;
+    @Schema(description = "소분류 카테고리", example = "SHORT_SLEEVE")
+    private String subCategory;
 
     @Schema(description = "퍼스널컬러", example = "SUMMER")
     private String personalColor;
