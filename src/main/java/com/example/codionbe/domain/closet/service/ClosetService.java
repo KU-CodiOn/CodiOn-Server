@@ -19,7 +19,6 @@ import com.example.codionbe.global.s3.S3Uploader;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -148,7 +147,7 @@ public class ClosetService {
         try {
             subCategory = SubCategory.valueOf(subCategoryStr);
         } catch (IllegalArgumentException e) {
-            subCategory = SubCategory.TSHIRT; // 기본값 설정
+            subCategory = SubCategory.SHORT_SLEEVE; // 기본값 설정
         }
 
         PersonalColor personalColor;
@@ -173,7 +172,7 @@ public class ClosetService {
         Clothes clothes = Clothes.builder()
                 .userId(userId)
                 .name(request.getName())
-                .category(request.getCategory())
+                .subCategory(SubCategory.valueOf(request.getSubCategory()))
                 .personalColor(request.getPersonalColor())
                 .color(request.getColor())
                 .suitableForRain(request.isSuitableForRain())
@@ -212,7 +211,7 @@ public class ClosetService {
         // 나머지 정보 수정
         clothes.updateInfo(
                 request.getName(),
-                request.getCategory(),
+                request.getSubCategory(),
                 request.getPersonalColor(),
                 request.getColor(),
                 request.isSuitableForRain(),

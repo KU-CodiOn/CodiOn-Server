@@ -1,9 +1,6 @@
 package com.example.codionbe.domain.closet.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,7 +23,9 @@ public class Clothes {
 
     private String name; // 별명
 
-    private String category; // "상의", "아우터", "바지", "원피스/스커트"
+    @Enumerated(EnumType.STRING)
+    private SubCategory subCategory;
+
     private String personalColor; // 예: "봄 웜"
     private String color; // 예: "베이지", "블랙"
 
@@ -67,10 +66,14 @@ public class Clothes {
         }
     }
 
-    public void updateInfo(String name, String category, String personalColor, String color,
+    public Category getCategory() {
+        return subCategory.getParentCategory(); // 이걸로 대분류 유추
+    }
+
+    public void updateInfo(String name, String subCategory, String personalColor, String color,
                            Boolean suitableForRain, List<String> situationKeywords) {
         this.name = name;
-        this.category = category;
+        this.subCategory = SubCategory.valueOf(subCategory);
         this.personalColor = personalColor;
         this.color = color;
         this.suitableForRain = suitableForRain;

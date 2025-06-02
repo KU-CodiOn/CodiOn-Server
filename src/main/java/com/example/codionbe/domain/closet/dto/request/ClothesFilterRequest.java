@@ -1,5 +1,6 @@
 package com.example.codionbe.domain.closet.dto.request;
 
+import com.example.codionbe.domain.closet.entity.Category;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 @Schema(description = "옷 필터 요청")
 public class ClothesFilterRequest {
+    @Schema(description = "대분류 카테고리", example = "OUTER") // 예: OUTER, TOP, BOTTOM, DRESS
+    private Category category;
 
     @Schema(description = "퍼스널컬러", example = "봄 웜")
     private String personalColor;

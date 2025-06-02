@@ -1,6 +1,8 @@
 package com.example.codionbe.domain.closet.dto.response;
 
+import com.example.codionbe.domain.closet.entity.Category;
 import com.example.codionbe.domain.closet.entity.Clothes;
+import com.example.codionbe.domain.closet.entity.SubCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,9 +24,6 @@ public class ClothesResponse {
     @Schema(description = "이미지 URL", example = "https://s3.amazonaws.com/bucket/image.jpg")
     private String imageUrl;
 
-    @Schema(description = "카테고리", example = "TOP")
-    private String category;
-
     @Schema(description = "퍼스널컬러", example = "SUMMER")
     private String personalColor;
 
@@ -43,19 +42,26 @@ public class ClothesResponse {
     @Schema(description = "착용 횟수", example = "3")
     private int wearCount;
 
+    @Schema(description = "대분류 카테고리", example = "OUTER")
+    private Category category;
+
+    @Schema(description = "소분류 카테고리", example = "CARDIGAN")
+    private SubCategory subCategory;
+
     public static ClothesResponse from(Clothes c) {
         return new ClothesResponse(
                 c.getId(),
                 c.getName(),
                 c.getImageUrl(),
-                c.getCategory(),
                 c.getPersonalColor(),
                 c.getColor(),
                 Arrays.asList(c.getSituationKeywords().split(",")),
 //                "", // 추후 perceivedTemperature 추가 시 반영
                 c.isSuitableForRain(),
                 c.isFavorite(),
-                c.getWearCount()
+                c.getWearCount(),
+                c.getCategory(),          // <- getCategory()는 Clothes 내부에서 subCategory 기준으로 계산
+                c.getSubCategory()        // <- 저장된 enum 값 그대로 전달
         );
     }
 }
